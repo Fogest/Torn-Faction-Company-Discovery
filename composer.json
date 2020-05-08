@@ -1,0 +1,14 @@
+{
+    "name": "fogest/torn-faction-companies",
+    "description": "Discovers companies owned by faction members",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^6.5"
+    },
+    "authors": [
+        {
+            "name": "Justin",
+            "email": "justin@jhvisser.com"
+        }
+    ]
+}
