@@ -3,7 +3,8 @@
     "description": "Discovers companies owned by faction members",
     "type": "project",
     "require": {
-        "guzzlehttp/guzzle": "^6.5"
+        "guzzlehttp/guzzle": "^6.5",
+        "hassankhan/config": "^2.1"
     },
     "authors": [
         {
