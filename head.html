@@ -17,7 +17,13 @@
         $(document).ready( function () {
             $('#directory-table').DataTable({
                 "pageLenth": 100,
-                "order": [[2, 'asc'], [3, 'asc']]
+                "order": [[2, 'asc'], [3, 'asc']],
+                "columnDefs": [
+                    {
+                        targets: [0,1,2,3,4],
+                        className: 'dt-body-center'
+                    }
+                ]
             });
         } );
     </script>

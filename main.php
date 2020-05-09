@@ -37,7 +37,7 @@ foreach($playerIds as $id) {
     if($i >= 15) break;
 }
 
-echo "<table id='directory-table' style=\"width:100%\">";
+echo "<table id='directory-table' class='display'>";
 echo "<thead>
         <tr>
             <th>Player Name</th>
