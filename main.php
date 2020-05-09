@@ -34,7 +34,7 @@ foreach($playerIds as $id) {
         $playersWithCompanies[] = $player;
     $i++;
     usleep(800 * 1000); // 800ms
-    if($i >= 15) break;
+//    if($i >= 15) break;
 }
 
 echo "<table id='directory-table' class='display'>";
