@@ -8,14 +8,11 @@ ob_start();
 
 $time_start = microtime(true); // Time how long it takes to run
 
-echo "
-    <head>
-    <title><!--TITLE--></title>
-    <style>
-    table, th, td {
-        border: 1px solid black;
-    }
-    </style></head>";
+echo "</head><body>";
+
+
+
+
 
 set_time_limit(1200); //Set limit for execution, this does not include sleep time!
 
@@ -37,10 +34,10 @@ foreach($playerIds as $id) {
         $playersWithCompanies[] = $player;
     $i++;
     usleep(800 * 1000); // 800ms
-//    if($i >= 20) break;
+    if($i >= 15) break;
 }
 
-echo "<table style=\"width:100%\">";
+echo "<table id='directory-table' style=\"width:100%\">";
 echo "<thead>
         <tr>
             <th>Player Name</th>
@@ -73,7 +70,10 @@ echo '<b>Total Execution Time:</b> '.number_format((float) $execution_time, 10) 
 echo "<b>Players Checked: </b>" . $i . "<br>";
 echo "<b>Last Generated: </b>" . date("Y-m-d H:i") . " EST" . "<br>";
 
-$pageContents = ob_get_contents();
-echo str_replace ('<!--TITLE-->', "Nuclear Company Directory", $pageContents);
+echo "</body>
+</html>";
+
+$header = file_get_contents("head.html");
+$pageContents = $header . ob_get_contents();
 file_put_contents("index.html", $pageContents);
 ob_end_clean();

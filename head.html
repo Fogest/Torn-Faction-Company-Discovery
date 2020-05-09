@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuclear Company Directory</title>
+
+    <style>
+        /*table, th, td {*/
+        /*    border: 1px solid black;*/
+        /*}*/
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8">
+        $(document).ready( function () {
+            $('#directory-table').DataTable({
+                "pageLenth": 100,
+                "order": [[2, 'asc'], [3, 'asc']]
+            });
+        } );
+    </script>
+</head>
