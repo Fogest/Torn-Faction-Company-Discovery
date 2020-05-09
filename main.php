@@ -68,6 +68,7 @@ $time_end = microtime(true);
 
 $execution_time = ($time_end - $time_start)/60;
 echo '<b>Total Execution Time:</b> '.number_format((float) $execution_time, 10) .' Minutes<br>';
-echo "Players Checked: " . $i . "<br>";
+echo "<b>Players Checked: <b>" . $i . "<br>";
+echo "<b>Last Generated: </b>" . date("Y-m-d H:I") . " EST" . "<br>";
 file_put_contents("index.html", ob_get_contents());
 ob_end_clean();
