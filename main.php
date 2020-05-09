@@ -9,12 +9,13 @@ ob_start();
 $time_start = microtime(true); // Time how long it takes to run
 
 echo "
+    <head>
     <title>Nuclear Company Directory</title>
     <style>
     table, th, td {
         border: 1px solid black;
     }
-    </style>";
+    </style></head>";
 
 set_time_limit(1200); //Set limit for execution, this does not include sleep time!
 
