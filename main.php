@@ -9,6 +9,7 @@ ob_start();
 $time_start = microtime(true); // Time how long it takes to run
 
 echo "
+    <title>Nuclear Company Directory</title>
     <style>
     table, th, td {
         border: 1px solid black;
