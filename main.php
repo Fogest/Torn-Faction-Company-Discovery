@@ -10,7 +10,7 @@ $time_start = microtime(true); // Time how long it takes to run
 
 echo "
     <head>
-    <title>Nuclear Company Directory</title>
+    <title><!--TITLE--></title>
     <style>
     table, th, td {
         border: 1px solid black;
@@ -72,5 +72,8 @@ $execution_time = ($time_end - $time_start)/60;
 echo '<b>Total Execution Time:</b> '.number_format((float) $execution_time, 10) .' Minutes<br>';
 echo "<b>Players Checked: </b>" . $i . "<br>";
 echo "<b>Last Generated: </b>" . date("Y-m-d H:i") . " EST" . "<br>";
-file_put_contents("index.html", ob_get_contents());
+
+$pageContents = ob_get_contents();
+echo str_replace ('<!--TITLE-->', "Nuclear Company Directory", $pageContents);
+file_put_contents("index.html", $pageContents);
 ob_end_clean();
