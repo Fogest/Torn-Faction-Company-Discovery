@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "guzzlehttp/guzzle": "^6.5",
-        "hassankhan/config": "^2.1"
+        "hassankhan/config": "^2.1",
+      "ext-json": "*"
     },
     "authors": [
         {
