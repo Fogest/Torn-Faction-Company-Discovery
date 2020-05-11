@@ -31,7 +31,7 @@ before_script:
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   # Just include this line:
-  - [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 update:
     stage: update
     script:
