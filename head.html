@@ -23,7 +23,13 @@
                         targets: [0,1,2,3,4],
                         className: 'dt-body-center'
                     }
-                ]
+                ],
+                "rowCallback": function(row, data, index) {
+                    let companyName = data[1].replace(/\s+/g, '');
+                    if (companyName.includes('hiring') || companyName.includes('hire')) {
+                        $('td', row).css('background-color', '#ffc8008c');
+                    }
+                }
             });
         } );
     </script>
