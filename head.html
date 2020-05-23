@@ -25,9 +25,15 @@
                     }
                 ],
                 "rowCallback": function(row, data, index) {
-                    let companyName = data[1].replace(/\s+/g, '');
+                    let companyName = data[1].replace(/\s+/g, '').toLowerCase(); // Strip whitespace and make lowercase
                     if (companyName.includes('hiring') || companyName.includes('hire')) {
                         $('td', row).css('background-color', '#ffc8008c');
+                    }
+
+                    let positions = data[4];
+                    let positionsSplit = positions.split('/');
+                    if(positionsSplit[0] !== positionsSplit[1]) {
+                        $(row).find('td:eq(4)').css('background-color', '#f75e5ead');
                     }
                 }
             });

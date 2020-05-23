@@ -36,10 +36,10 @@ foreach($playerIds as $id) {
     $player = new Player($data, $id);
     if($player->isCompanyOwner())
         $playersWithCompanies[] = $player;
-    if (isLocalhost()) usleep(50 * 1000); // 50ms only as less iterations are run locally
+    if (isLocalhost()) usleep(100 * 1000); // 50ms only as less iterations are run locally
     else usleep(800 * 1000); // 800ms
     $i++;
-    if($i >= 30 && isLocalhost()) break;
+    if($i >= 60 && isLocalhost()) break;
 }
 
 echo "<table id='directory-table' class='display'>";
@@ -64,7 +64,7 @@ foreach($playersWithCompanies as $player) {
     echo "<td>" . $company->getCompanyPositionsFilled() . "/" . $company->getCompanyPositionsMax() . '</td>';
 
     echo "</tr>";
-    if (isLocalhost()) usleep(50 * 1000); // 50ms only as less iterations are run locally
+    if (isLocalhost()) usleep(100 * 1000); // 50ms only as less iterations are run locally
     else usleep(800 * 1000); // 800ms
 }
 echo "</tbody></table>";
