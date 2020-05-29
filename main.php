@@ -4,11 +4,9 @@ require 'data.php';
 require 'Faction.php';
 require 'Player.php';
 
-function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
-    return in_array($_SERVER['REMOTE_ADDR'], $whitelist);
-}
-function isCommandLineInterface()
-{
+$DEBUG = false;
+
+function isCommandLineInterface() {
     return (php_sapi_name() === 'cli');
 }
 
@@ -36,10 +34,10 @@ foreach($playerIds as $id) {
     $player = new Player($data, $id);
     if($player->isCompanyOwner())
         $playersWithCompanies[] = $player;
-    if (isLocalhost()) usleep(100 * 1000); // 50ms only as less iterations are run locally
+    if ($DEBUG) usleep(100 * 1000); // 50ms only as less iterations are run locally
     else usleep(800 * 1000); // 800ms
     $i++;
-    if($i >= 60 && isLocalhost()) break;
+    if($i >= 60 && $DEBUG) break;
 }
 
 echo "<table id='directory-table' class='display'>";
@@ -64,7 +62,7 @@ foreach($playersWithCompanies as $player) {
     echo "<td>" . $company->getCompanyPositionsFilled() . "/" . $company->getCompanyPositionsMax() . '</td>';
 
     echo "</tr>";
-    if (isLocalhost()) usleep(100 * 1000); // 50ms only as less iterations are run locally
+    if ($DEBUG) usleep(100 * 1000); // 50ms only as less iterations are run locally
     else usleep(800 * 1000); // 800ms
 }
 echo "</tbody></table>";
@@ -75,7 +73,7 @@ $execution_time = ($time_end - $time_start)/60;
 echo '<b>Total Execution Time:</b> '.number_format((float) $execution_time, 10) .' Minutes<br>';
 echo "<b>Players Checked: </b>" . $i . "<br>";
 echo "<b>Last Generated: </b>" . date("Y-m-d H:i") . " EST" . "<br>";
-if(isLocalhost()) echo "<b><a href='main.php'>Force Generate</a></b><br>";
+if($DEBUG) echo "<b><a href='main.php'>Force Generate</a></b><br>";
 
 echo "</body>
 </html>";
