@@ -36,8 +36,12 @@ update:
     stage: update
     script:
         - ssh root@d2.jhvisser.com 'cd /var/www/nuke.jhvisser.com/; git pull --rebase origin master'
+    only:
+      - master
 
 build:
     stage: build
     script:
         - ssh root@d2.jhvisser.com 'cd /var/www/nuke.jhvisser.com/; php main.php'
+    only:
+      - master
