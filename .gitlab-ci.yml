@@ -56,7 +56,7 @@ npm:
     - npm install
     - npm run production
   artifacts:
-  expire_in: 1 month
+    expire_in: 1 month
   paths:
     - node_modules/
     - public/css/
