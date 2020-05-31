@@ -1,4 +1,4 @@
-image: lorisleiva/laravel-docker:stable
+image: fogest/laravel-docker-redis:latest
 
 variables:
   DB_HOST: 127.0.0.1
@@ -37,10 +37,6 @@ composer:
     paths:
       - vender/
   script:
-    - echo "https://mirror.csclub.uwaterloo.ca/alpine/latest-stable/main" > /etc/apk/repositories
-    - echo "https://mirror.csclub.uwaterloo.ca/alpine/latest-stable/community" >>/etc/apk/repositories
-    - apk add --no-cache php-dev
-    - pecl install redis
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - cp .env.gitlab-ci .env
     - php artisan key:generate
