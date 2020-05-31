@@ -37,6 +37,7 @@ composer:
     paths:
       - vender/
   script:
+    - apk add --no-cache php-dev
     - pecl install redis
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - cp .env.gitlab-ci .env
