@@ -14,8 +14,14 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary()->comment('The companies in game ID from Torn');
+            $table->unsignedBigInteger('player_id');
             $table->timestamps();
+
+            $table->foreign('player_id')
+                ->references('id')
+                ->on('players')
+                ->onDelete('cascade');
         });
     }
 

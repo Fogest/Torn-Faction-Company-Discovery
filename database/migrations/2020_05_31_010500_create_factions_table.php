@@ -14,7 +14,10 @@ class CreateFactionsTable extends Migration
     public function up()
     {
         Schema::create('factions', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary()->comment('The factions in game ID from Torn');
+            $table->string('name');
+            $table->integer('current_players');
+            $table->integer('max_players');
             $table->timestamps();
         });
     }

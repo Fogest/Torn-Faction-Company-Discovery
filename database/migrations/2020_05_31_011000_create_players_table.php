@@ -14,8 +14,14 @@ class CreatePlayersTable extends Migration
     public function up()
     {
         Schema::create('players', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary()->comment('The players in game ID from Torn');
+            $table->unsignedBigInteger('faction_id');
             $table->timestamps();
+
+            $table->foreign('faction_id')
+                ->references('id')
+                ->on('factions')
+                ->onDelete('cascade');
         });
     }
 
