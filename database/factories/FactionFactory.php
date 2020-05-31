@@ -7,6 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Faction::class, function (Faker $faker) {
     return [
-        //
+        'id' => $faker->unique()->numberBetween(1000,2000),
+        'name' => $faker->unique()->city,
+        'current_players' => $faker->numberBetween(10, 75),
+        'max_players' => $faker->numberBetween(75,100)
     ];
 });
