@@ -37,6 +37,8 @@ composer:
     paths:
       - vender/
   script:
+    - echo "https://mirror.csclub.uwaterloo.ca/alpine/latest-stable/main" > /etc/apk/repositories
+    - echo "https://mirror.csclub.uwaterloo.ca/alpine/latest-stable/community" >>/etc/apk/repositories
     - apk add --no-cache php-dev
     - pecl install redis
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
