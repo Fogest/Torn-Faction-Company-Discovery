@@ -115,7 +115,7 @@ return [
     'hosts' => [
         'nuke.jhvisser.com' => [
             'deploy_path' => '/var/www/nuke.jhvisser.com',
-            'user' => 'root',
+            'user' => 'jhvisser',
             'sshOptions'   => [
                 'UserKnownHostsFile' => '/dev/null',
                 'StrictHostKeyChecking' => 'no',
@@ -123,7 +123,7 @@ return [
         ],
         'nuke-stage.jhvisser.com' => [
             'deploy_path' => '/var/www/nuke-stage.jhvisser.com',
-            'user' => 'root',
+            'user' => 'jhvisser',
             'sshOptions'   => [
                 'UserKnownHostsFile' => '/dev/null',
                 'StrictHostKeyChecking' => 'no',
