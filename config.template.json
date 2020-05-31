@@ -1,0 +1,5 @@
+{
+  "tornApiBase": "http://api.torn.com/",
+  "factionsToParse": ["8954", "8085", "21028", "12863", "13851", "9745", "17133"],
+  "apiKey": ""
+}

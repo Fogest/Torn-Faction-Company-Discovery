@@ -1,118 +1,47 @@
-image: lorisleiva/laravel-docker:stable
+image: ubuntu:latest
 
-variables:
-  DB_HOST: 127.0.0.1
-  DB_PORT: 3306
-  DB_DATABASE: "nuke"
-  DB_USERNAME: "nuke"
-  DB_PASSWORD: "$NUKE_DB_PASSWORD"
-
-.init_ssh: &init_ssh |
-  eval $(ssh-agent -s)
-  echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-  mkdir -p ~/.ssh
-  chmod 700 ~/.ssh
-  [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-
-.change_file_permissions: &change_file_permissions |
-  find . -type f -not -path "./vendor/*" -exec chmod 664 {} \;
-  find . -type d -not -path "./vendor/*" -exec chmod 775 {} \;
-
-
-# Just build, pre-deploy, and deploy for now. 
-# Can add 'test' later if testing gets added
 stages:
+  - update
   - build
-  - pre-deploy
-  - deploy
 
 
-#######################################
-#            Build Stage              #
-#######################################
-composer:
-  stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}-composer
-    paths:
-      - vender/
-  script:
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-    - cp .env.gitlab-ci .env
-    - php artisan key:generate
-  artifacts:
-    expire_in: 1 month
-    paths:
-      - vendor/
-      - .env
+before_script:
+  ##
+  ## Install ssh-agent if not already installed, it is required by Docker.
+  ## (change apt-get to yum if you use an RPM-based image)
+  ##
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
 
-npm:
-  stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}-npm
-    paths:
-      - node_modules/
-  script:
-    - npm install
-    - npm run production
-  artifacts:
-  expire_in: 1 month
-  paths:
-    - node_modules/
-    - public/css/
-    - public/js/
-    - public/mix-manifest.json
+  ##
+  ## Run ssh-agent (inside the build environment)
+  ##
+  - eval $(ssh-agent -s)
 
+  ##
+  ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+  ## We're using tr to fix line endings which makes ed25519 keys work
+  ## without extra base64 encoding.
+  ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+  ##
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
 
-#######################################
-#          Pre-Deploy Stage           #
-#######################################
+  ##
+  ## Create the SSH directory and give it the right permissions
+  ##
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  # Just include this line:
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+update:
+    stage: update
+    script:
+        - ssh root@d2.jhvisser.com 'cd /var/www/nuke.jhvisser.com/; git pull --rebase origin master'
+    only:
+      - master
 
-#### NOT USED YET
-
-#######################################
-#            Deploy Stage             #
-#######################################
-
-staging:
-  variables:
-    DB_HOST: "d2.jhvisser.com"
-    DB_USERNAME: "nuke"
-    DB_DATABASE: "nuke-stage"
-    APP_ENV: "staging"
-    APP_DEBUG: "true"
-    APP_URL: "https://nuke-stage.jhvisser.com"
-    CI_DEBUG_TRACE: "true"
-  stage: deploy
-  script:
-    - *init_ssh
-    - *change_file_permissions
-    - php artisan config:cache
-    - php artisan deploy nuke-stage.jhvisser.com -s upload
-  environment:
-    name: staging
-    url: https://nuke-stage.jhvisser.com
-  only:
-    - laravel
-
-production:
-  variables:
-    DB_HOST: "d2.jhvisser.com"
-    DB_USERNAME: "nuke"
-    DB_DATABASE: "nuke"
-    APP_ENV: "production"
-    APP_DEBUG: "false"
-    APP_URL: "https://nuke.jhvisser.com"
-  stage: deploy
-  script:
-    - *init_ssh
-    - *change_file_permissions
-    - php artisan config:cache
-    - php artisan deploy nuke.jhvisser.com -s upload
-  environment:
-    name: staging
-    url: https://nuke.jhvisser.com
-  when: manual
-  only:
-    - laravel
-
+build:
+    stage: build
+    script:
+        - ssh root@d2.jhvisser.com 'cd /var/www/nuke.jhvisser.com/; php main.php'
+    only:
+      - master
