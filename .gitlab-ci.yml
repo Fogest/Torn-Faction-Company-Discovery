@@ -1,7 +1,7 @@
 image: fogest/laravel-docker-redis:latest
 
 variables:
-  DB_HOST: 127.0.0.1
+  DB_HOST: "d2.jhvisser.com"
   DB_PORT: 3306
   DB_DATABASE: "nuke"
   DB_USERNAME: "nuke"
