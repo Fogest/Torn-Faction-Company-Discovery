@@ -82,7 +82,6 @@ staging:
     APP_ENV: "staging"
     APP_DEBUG: "true"
     APP_URL: "https://nuke-stage.jhvisser.com"
-    CI_DEBUG_TRACE: "true"
   stage: deploy
   script:
     - *init_ssh
