@@ -32,6 +32,9 @@ stages:
 #######################################
 composer:
   stage: build
+  variables:
+    CACHE_DRIVER: "file"
+    SESSION_DRIVER: "file"
   cache:
     key: ${CI_COMMIT_REF_SLUG}-composer
     paths:
