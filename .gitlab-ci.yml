@@ -85,6 +85,8 @@ staging:
     APP_ENV: "staging"
     APP_DEBUG: "true"
     APP_URL: "https://nuke-stage.jhvisser.com"
+    CACHE_DRIVER: "file"
+    SESSION_DRIVER: "file"
   stage: deploy
   script:
     - *init_ssh
@@ -105,6 +107,8 @@ production:
     APP_ENV: "production"
     APP_DEBUG: "false"
     APP_URL: "https://nuke.jhvisser.com"
+    CACHE_DRIVER: "file"
+    SESSION_DRIVER: "file"
   stage: deploy
   script:
     - *init_ssh
