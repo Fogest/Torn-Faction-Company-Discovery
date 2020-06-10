@@ -15,7 +15,8 @@
         "laravel/framework": "^7.0",
         "laravel/telescope": "^3.5",
         "laravel/tinker": "^2.0",
-        "lorisleiva/laravel-deployer": "^0.3.2"
+        "lorisleiva/laravel-deployer": "^0.3.2",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
