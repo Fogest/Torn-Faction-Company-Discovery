@@ -80,13 +80,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @forelse ($companies as $company)
+                    <tr>
+                        <td>{{ $company->player->id }}</td>
+                        <td>{{ $company->id }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         @php

@@ -13,8 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
 
-//Route::get('/', 'CompanyController@show');
+Route::get('/', 'CompanyController@index');
