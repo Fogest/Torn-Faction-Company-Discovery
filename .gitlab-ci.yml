@@ -7,6 +7,7 @@ variables:
   DB_USERNAME: "nuke"
   DB_PASSWORD: "$NUKE_DB_PASSWORD"
   REDIS_PASSWORD: "$REDIS_PASSWORD"
+  TORN_API_KEY: "$TORN_API_KEY"
 
 .init_ssh: &init_ssh |
   eval $(ssh-agent -s)
