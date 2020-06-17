@@ -84,7 +84,7 @@
                     <tr>
                         <td>{{ $company->player->id }}</td>
                         <td>{{ $company->id }}</td>
-                        <td></td>
+                        <td>{{ $company->type->name }}</td>
                         <td></td>
                         <td></td>
                     </tr>

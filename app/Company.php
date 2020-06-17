@@ -14,6 +14,6 @@ class Company extends Model
     }
     public function type()
     {
-        return $this->hasOne(CompanyTypes::class);
+        return $this->hasOne(CompanyTypes::class, 'id', 'company_type');
     }
 }
