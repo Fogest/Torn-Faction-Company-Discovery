@@ -82,11 +82,19 @@
             <tbody>
                 @forelse ($companies as $company)
                     <tr>
-                        <td>{{ $company->player->id }}</td>
-                        <td>{{ $company->id }}</td>
+                        <td>
+                            <a href='https://www.torn.com/profiles.php?XID={{ $company->player->id }}'>
+                                {{ $company->player->name }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href='https://www.torn.com/joblist.php#/p=corpinfo&userID={{ $company->id }}'>
+                                {{ $company->name }}
+                            </a>
+                        </td>
                         <td>{{ $company->type->name }}</td>
-                        <td></td>
-                        <td></td>
+                        <td> {{ $company->rank }}</td>
+                        <td> {{ $company->hired_employees }}/{{ $company->max_employees }}</td>
                     </tr>
                 @empty
                     <tr>

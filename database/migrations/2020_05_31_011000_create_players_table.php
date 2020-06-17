@@ -16,6 +16,7 @@ class CreatePlayersTable extends Migration
         Schema::create('players', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary()->comment('The players in game ID from Torn');
             $table->unsignedBigInteger('faction_id');
+            $table->string('name', 150);
             $table->timestamps();
 
             $table->foreign('faction_id')
