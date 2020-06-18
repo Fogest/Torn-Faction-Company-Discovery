@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Faction;
+use App\Jobs\Middleware\RateLimited;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+
+class UpdateFactionData implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $faction;
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware()
+    {
+        return [new RateLimited];
+    }
+
+    /**
+     * Create a new job instance.
+     *
+     * @param Faction $faction
+     */
+    public function __construct(Faction $faction)
+    {
+        $this->faction = $faction;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $response = Http::withOptions([
+            'verify' => false,
+            'base_uri' => env('TORN_API_BASE', "http://api.torn.com/"),
+            'timeout' => 5.0
+        ])->get("faction/" . $this->faction->id, [
+            'selections' => 'basic',
+            'key' => env('TORN_API_KEY')
+        ]);
+
+        Log::debug('Response', ['response' => $response]);
+
+        $tornFactionData = $response->json();
+        Log::debug('Response in JSON', ['response_json' => $tornFactionData]);
+
+        Log::debug('Name from JSON', ['name' => $tornFactionData['name']]);
+        $this->faction->name = $tornFactionData['name'];
+
+        $this->faction->current_players = count($tornFactionData['members']);
+
+        if ($this->faction->isDirty('current_players')) {
+            $this->faction->save();
+//            UpdateAllPlayersInFaction::dispatch($this->faction)->onQueue('torn-api');
+        }
+    }
+}

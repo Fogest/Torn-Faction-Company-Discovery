@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'CompanyController@index');
+Route::get('/update', 'FactionController@index');

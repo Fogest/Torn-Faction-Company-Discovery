@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Faction;
+use App\Jobs\UpdateAllFactionData;
 use Illuminate\Http\Request;
 
 class FactionController extends Controller
@@ -14,7 +15,8 @@ class FactionController extends Controller
      */
     public function index()
     {
-        //
+        UpdateAllFactionData::dispatchNow();
+        return redirect('');
     }
 
     /**
