@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'horizon.auth' => \App\Http\Middleware\HorizonAuthBasic::class,
+        'telescope.auth' => \App\Http\Middleware\TelescopeAuthBasic::class,
     ];
 }

@@ -54,18 +54,16 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     }
 
     /**
-     * Register the Telescope gate.
-     *
-     * This gate determines who can access Telescope in non-local environments.
+     * Overload authorization method from \Laravel\Telescope\TelescopeApplicationServiceProvider
+     * to allow access to Horizon without having a logged in user.
      *
      * @return void
      */
-    protected function gate()
+    protected function authorization()
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+        Telescope::auth(function () {
+            return true;
         });
     }
+
 }
