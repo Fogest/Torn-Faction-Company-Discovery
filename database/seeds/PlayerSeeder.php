@@ -12,10 +12,10 @@ class PlayerSeeder extends Seeder
      */
     public function run()
     {
-        $user = new App\User();
-        $user->password = Hash::make(env('USER_ACCOUNT_PASSWORD', '123'));
-        $user->name = "jhvisser";
-        $user->email = "justin@jhvisser.com";
-        $user->save();
+        App\User::firstOrCreate([
+            'password' => Hash::make(env('USER_ACCOUNT_PASSWORD', '123')),
+            'name' => "jhvisser",
+            'email' => "justin@jhvisser.com",
+        ]);
     }
 }
