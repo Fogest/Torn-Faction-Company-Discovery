@@ -23,7 +23,8 @@ class RateLimited
                 function () use ($job, $next) {
                     // Lock obtained...
                     $next($job);
-                }, function () use ($job) {
+                },
+                function () use ($job) {
                     // Could not obtain lock...
                     $job->release(5);
                 }

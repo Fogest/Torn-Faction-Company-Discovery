@@ -52,7 +52,8 @@ class UpdateFactionData implements ShouldQueue
             'timeout' => 5.0
             ]
         )->get(
-            "faction/" . $this->faction->id, [
+            "faction/" . $this->faction->id,
+            [
                 'selections' => 'basic',
                 'key' => env('TORN_API_KEY')
                 ]
