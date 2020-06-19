@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Faction;
 use App\Jobs\Middleware\RateLimited;
+use App\Player;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -71,7 +72,17 @@ class UpdateFactionData implements ShouldQueue
 
         if ($this->faction->isDirty('current_players')) {
             $this->faction->save();
-            //            UpdateAllPlayersInFaction::dispatch($this->faction)->onQueue('torn-api');
         }
+
+        // Go through "members" in API response to generate Player "collection"
+        $players = [];
+        foreach ($tornFactionData['members'] as $memberId => $member) {
+            $player = new Player;
+            $player->id = $memberId;
+            $player->faction_id = $this->faction->id;
+            $player->name = $member['name'];
+            $players[] = $player;
+        }
+        UpdateFactionPlayerlist::dispatch($this->faction, collect($players))->onQueue('torn-api');
     }
 }

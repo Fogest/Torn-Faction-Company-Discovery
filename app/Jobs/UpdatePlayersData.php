@@ -2,26 +2,15 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Middleware\RateLimited;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class UpdateAllPlayersInFaction implements ShouldQueue
+class UpdatePlayersData implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * Get the middleware the job should pass through.
-     *
-     * @return array
-     */
-    public function middleware()
-    {
-        return [new RateLimited];
-    }
 
     /**
      * Create a new job instance.

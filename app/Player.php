@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Player extends Model
 {
     public $incrementing = false;
+    protected $fillable = ['id', 'faction_id', 'name'];
+
     public function faction()
     {
         return $this->belongsTo(Faction::class);
