@@ -11,7 +11,8 @@ class FactionSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('factions')->insertOrIgnore([
+        DB::table('factions')->insertOrIgnore(
+            [
             ['id' => 8954, 'name' => 'Nuclear Armageddon'],
             ['id' => 8085, 'name' => 'Nuclear Blast'],
             ['id' => 21028, 'name' => 'Nuclear Clinic'],
@@ -19,6 +20,7 @@ class FactionSeeder extends Seeder
             ['id' => 13851, 'name' => 'Nuclear Engineering'],
             ['id' => 9745, 'name' => 'Emergency Room'],
             ['id' => 17133, 'name' => 'Torn Medical'],
-        ]);
+            ]
+        );
     }
 }

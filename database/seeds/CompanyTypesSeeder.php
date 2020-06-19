@@ -11,7 +11,8 @@ class CompanyTypesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('company_types')->insertOrIgnore([
+        DB::table('company_types')->insertOrIgnore(
+            [
             ['id' => 19, 'name' => 'Firework Stand'],
             ['id' => 3, 'name' => 'Flower Shop'],
             ['id' => 8, 'name' => 'Candle Shop'],
@@ -52,6 +53,7 @@ class CompanyTypesSeeder extends Seeder
             ['id' => 16, 'name' => 'Television Network'],
             ['id' => 28, 'name' => 'Oil Rig'],
             ['id' => 0, 'name' => 'Unknown']
-        ]);
+            ]
+        );
     }
 }

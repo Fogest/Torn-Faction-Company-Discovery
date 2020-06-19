@@ -32,8 +32,10 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      */
     protected function authorization()
     {
-        Horizon::auth(function () {
-            return true;
-        });
+        Horizon::auth(
+            function () {
+                return true;
+            }
+        );
     }
 }

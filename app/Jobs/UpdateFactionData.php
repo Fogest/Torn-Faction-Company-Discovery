@@ -45,14 +45,18 @@ class UpdateFactionData implements ShouldQueue
      */
     public function handle()
     {
-        $response = Http::withOptions([
+        $response = Http::withOptions(
+            [
             'verify' => false,
             'base_uri' => env('TORN_API_BASE', "http://api.torn.com/"),
             'timeout' => 5.0
-        ])->get("faction/" . $this->faction->id, [
-            'selections' => 'basic',
-            'key' => env('TORN_API_KEY')
-        ]);
+            ]
+        )->get(
+            "faction/" . $this->faction->id, [
+                'selections' => 'basic',
+                'key' => env('TORN_API_KEY')
+                ]
+        );
 
         Log::debug('Response', ['response' => $response]);
 
@@ -66,7 +70,7 @@ class UpdateFactionData implements ShouldQueue
 
         if ($this->faction->isDirty('current_players')) {
             $this->faction->save();
-//            UpdateAllPlayersInFaction::dispatch($this->faction)->onQueue('torn-api');
+            //            UpdateAllPlayersInFaction::dispatch($this->faction)->onQueue('torn-api');
         }
     }
 }

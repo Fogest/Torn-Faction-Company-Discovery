@@ -13,10 +13,12 @@ class CreateCompanyTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_types', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary()->comment('The companies type IDs from in-game');
-            $table->string('name', 250);
-        });
+        Schema::create(
+            'company_types', function (Blueprint $table) {
+                $table->unsignedBigInteger('id')->primary()->comment('The companies type IDs from in-game');
+                $table->string('name', 250);
+            }
+        );
     }
 
     /**

@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Faction;
 use App\Jobs\UpdateAllFactionData;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class FactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -22,7 +23,7 @@ class FactionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -32,8 +33,8 @@ class FactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -43,8 +44,8 @@ class FactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Faction  $faction
-     * @return \Illuminate\Http\Response
+     * @param  Faction $faction
+     * @return Response
      */
     public function show(Faction $faction)
     {
@@ -54,8 +55,8 @@ class FactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Faction  $faction
-     * @return \Illuminate\Http\Response
+     * @param  Faction $faction
+     * @return Response
      */
     public function edit(Faction $faction)
     {
@@ -65,9 +66,9 @@ class FactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Faction  $faction
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @param  Faction $faction
+     * @return Response
      */
     public function update(Request $request, Faction $faction)
     {
@@ -77,8 +78,8 @@ class FactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Faction  $faction
-     * @return \Illuminate\Http\Response
+     * @param  Faction $faction
+     * @return Response
      */
     public function destroy(Faction $faction)
     {
