@@ -30,7 +30,7 @@ class UpdateAllFactionData implements ShouldQueue
      */
     public function handle()
     {
-        foreach(Faction::all() as $faction) {
+        foreach (Faction::all() as $faction) {
             UpdateFactionData::dispatch($faction)->onQueue('torn-api');
         }
     }
