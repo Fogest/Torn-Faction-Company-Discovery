@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
                 $table->integer('rank');
                 $table->integer('hired_employees');
                 $table->integer('max_employees');
+                $table->boolean('isOwner')->default(false);
                 $table->timestamps();
 
                 $table->foreign('player_id')

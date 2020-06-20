@@ -18,6 +18,7 @@ class CreatePlayersTable extends Migration
                 $table->unsignedBigInteger('id')->primary()->comment('The players in game ID from Torn');
                 $table->unsignedBigInteger('faction_id');
                 $table->string('name', 150);
+                $table->timestamp('last_complete_update_at')->useCurrent();
                 $table->timestamps();
 
                 $table->foreign('faction_id')

@@ -66,9 +66,9 @@ class UpdateFactionPlayerlist implements ShouldQueue
             $updatedPlayerIds[] = $playerUpdate->id;
 
             // If it's a new player or the player was last updated awhile ago, then get new data!
-            if ($playerUpdate->wasRecentlyCreated || $playerUpdate->updated_at->diffInDays(Carbon::now()) >= 3) {
-                Log::debug("Updating '{$playerUpdate->name}' with new data", ['playerUpdate' => $playerUpdate]);
-                UpdatePlayer::dispatch($playerUpdate)->onQueue('torn-api');
+            if ($playerUpdate->wasRecentlyCreated || Carbon::parse($playerUpdate->last_complete_update_at)->diffInDays(Carbon::now()) >= 3) {
+                Log::info("Updating '{$playerUpdate->name}' with new data", ['playerUpdate' => $playerUpdate]);
+//                UpdatePlayer::dispatch($playerUpdate)->onQueue('torn-api');
             } else {
                 Log::debug("Player data fresh, no update performed", ['playerUpdate' => $playerUpdate]);
             }

@@ -18,4 +18,9 @@ class Player extends Model
     {
         return $this->hasMany(Company::class);
     }
+
+    public function isOwner()
+    {
+        return $this->companies()->where('isOwner', true)->get('isOwner');
+    }
 }
