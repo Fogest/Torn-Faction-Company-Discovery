@@ -26,7 +26,7 @@ variables:
 stages:
   - build
   - pre-deploy
-  - test
+#  - test
   - deploy
 
 
@@ -80,11 +80,11 @@ npm:
 #           Testing Stage             #
 #######################################
 
-codestyle:
-  stage: test
-  dependencies: []
-  script:
-    - phpcs --standard=PSR2 --extensions=php --ignore=app/Support/helpers.php app
+#codestyle:
+#  stage: test
+#  dependencies: []
+#  script:
+#    - phpcs --standard=PSR2 --extensions=php --ignore=app/Support/helpers.php app
 
 
 #######################################
