@@ -18,10 +18,10 @@ class CreateCompaniesTable extends Migration
                 $table->unsignedBigInteger('id')->primary()->comment('The companies in game ID from Torn');
                 $table->string('name', 250);
                 $table->unsignedBigInteger('player_id');
-                $table->unsignedBigInteger('company_type');
-                $table->integer('rank');
-                $table->integer('hired_employees');
-                $table->integer('max_employees');
+                $table->unsignedBigInteger('company_type')->default(0);
+                $table->integer('rank')->nullable();
+                $table->integer('hired_employees')->nullable();
+                $table->integer('max_employees')->nullable();
                 $table->boolean('isOwner')->default(false);
                 $table->timestamps();
 

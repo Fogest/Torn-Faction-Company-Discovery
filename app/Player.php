@@ -14,13 +14,13 @@ class Player extends Model
         return $this->belongsTo(Faction::class);
     }
 
-    public function companies()
+    public function company()
     {
-        return $this->hasMany(Company::class);
+        return $this->hasOne(Company::class);
     }
 
     public function isOwner()
     {
-        return $this->companies()->where('isOwner', true)->get('isOwner');
+        return $this->company()->where('isOwner', true)->get('isOwner');
     }
 }

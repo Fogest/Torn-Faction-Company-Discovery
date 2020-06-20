@@ -60,12 +60,8 @@ class UpdateFactionData implements ShouldQueue
                 ]
         );
 
-        Log::debug('Response', ['response' => $response]);
-
         $tornFactionData = $response->json();
-        Log::debug('Response in JSON', ['response_json' => $tornFactionData]);
 
-        Log::debug('Name from JSON', ['name' => $tornFactionData['name']]);
         $this->faction->name = $tornFactionData['name'];
 
         $this->faction->current_players = count($tornFactionData['members']);

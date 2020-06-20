@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Company;
 use App\Jobs\Middleware\RateLimited;
 use App\Player;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,16 +13,12 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-/**
- * Class UpdatePlayer
- * @package App\Jobs
- * Updates the player data from the Torn API
- */
-class UpdatePlayer implements ShouldQueue
+class UpdateCompany implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $player;
+    protected $company;
 
     /**
      * Get the middleware the job should pass through.
@@ -38,11 +33,13 @@ class UpdatePlayer implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Player $player
+     * @param Company $company
      */
-    public function __construct(Player $player)
+    public function __construct(Player $player, Company $company)
     {
         $this->player = $player;
+        $this->company = $company;
     }
 
     /**
@@ -59,30 +56,20 @@ class UpdatePlayer implements ShouldQueue
                 'timeout' => 5.0
             ]
         )->get(
-            "user/" . $this->player->id,
+            "company/" . $this->company->id,
             [
                 'selections' => 'profile',
                 'key' => env('TORN_API_KEY')
             ]
         );
-        $tornPlayerData = $response->json();
+        $tornCompanyData = $response->json()['company'];
 
-        if ($tornPlayerData['job']['position'] === "Director") {
-            $company = Company::updateOrCreate(
-                [
-                    'id' => $tornPlayerData['job']['company_id']
-                ],
-                [
-                    'name' => $tornPlayerData['job']['company_name'],
-                    'player_id' => $this->player->id,
-                    'isOwner' => true
-                ]
-            );
-            Log::info("Updating company '{$company->name}'' now", ['company' => $company]);
-            UpdateCompany::dispatch($this->player, $company)->onQueue('torn-api');
-        }
+        $this->company->company_type = $tornCompanyData['company_type'];
+        $this->company->rank = $tornCompanyData['rating'];
+        $this->company->hired_employees = $tornCompanyData['employees_hired'];
+        $this->company->max_employees = $tornCompanyData['employees_capacity'];
+        $this->company->save();
 
-        $this->player->last_complete_update_at = Carbon::now();
-        $this->player->save();
+        Log::info("Finished updating company '{$this->company->name}' complete", ['company' => $this->company]);
     }
 }

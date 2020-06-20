@@ -18,7 +18,7 @@ class RateLimited
     public function handle($job, $next)
     {
         Redis::throttle('torn-api')
-            ->block(0)->allow(10)->every(2)
+            ->allow(75)->every(60)
             ->then(
                 function () use ($job, $next) {
                     // Lock obtained...
