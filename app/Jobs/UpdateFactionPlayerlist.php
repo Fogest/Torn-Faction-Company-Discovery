@@ -5,12 +5,14 @@ namespace App\Jobs;
 use App\Faction;
 use App\Jobs\Middleware\RateLimited;
 use App\Player;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class UpdateFactionPlayerlist implements ShouldQueue
 {
@@ -48,8 +50,6 @@ class UpdateFactionPlayerlist implements ShouldQueue
      */
     public function handle()
     {
-        $playersInDatabase = $this->faction->players();
-
         $updatedPlayerIds = [];
         foreach ($this->players as $player) {
             $playerUpdate = Player::updateOrCreate(
@@ -64,6 +64,14 @@ class UpdateFactionPlayerlist implements ShouldQueue
 
             // Storing id's of records updated
             $updatedPlayerIds[] = $playerUpdate->id;
+
+            // If it's a new player or the player was last updated awhile ago, then get new data!
+            if ($playerUpdate->wasRecentlyCreated || $playerUpdate->updated_at->diffInDays(Carbon::now()) >= 3) {
+                Log::debug("Updating '{$playerUpdate->name}' with new data", ['playerUpdate' => $playerUpdate]);
+                UpdatePlayer::dispatch($playerUpdate)->onQueue('torn-api');
+            } else {
+                Log::debug("Player data fresh, no update performed", ['playerUpdate' => $playerUpdate]);
+            }
         }
 
         //Delete any ID's that were not updated via the API
