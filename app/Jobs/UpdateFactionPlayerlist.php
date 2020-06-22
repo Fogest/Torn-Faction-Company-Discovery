@@ -68,7 +68,7 @@ class UpdateFactionPlayerlist implements ShouldQueue
             // If it's a new player or the player was last updated awhile ago, then get new data!
             if ($playerUpdate->wasRecentlyCreated || $playerUpdate->last_complete_update_at == null || Carbon::parse($playerUpdate->last_complete_update_at)->diffInDays(Carbon::now()) >= 1) {
                 Log::info("Updating '{$playerUpdate->name}' with new data", ['playerUpdate' => $playerUpdate]);
-                UpdatePlayer::dispatch($playerUpdate)->onQueue('torn-api');
+                UpdatePlayer::dispatch($playerUpdate);
             } else {
                 Log::debug("Player data fresh, no update performed", ['playerUpdate' => $playerUpdate]);
             }

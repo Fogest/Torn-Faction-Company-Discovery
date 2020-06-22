@@ -79,7 +79,7 @@ class UpdatePlayer implements ShouldQueue
                 ]
             );
             Log::info("Updating company '{$company->name}'' now", ['company' => $company]);
-            UpdateCompany::dispatch($this->player, $company)->onQueue('torn-api');
+            UpdateCompany::dispatch($this->player, $company);
         }
 
         $this->player->last_complete_update_at = Carbon::now();

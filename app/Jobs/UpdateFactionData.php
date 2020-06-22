@@ -89,6 +89,6 @@ class UpdateFactionData implements ShouldQueue
             $player->name = $member['name'];
             $players[] = $player;
         }
-        UpdateFactionPlayerlist::dispatch($this->faction, collect($players))->onQueue('torn-api');
+        UpdateFactionPlayerlist::dispatch($this->faction, collect($players));
     }
 }
