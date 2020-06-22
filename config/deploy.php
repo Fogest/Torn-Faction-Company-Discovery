@@ -57,6 +57,7 @@ return [
         
         // Deployment is done but not live yet (before symlink)
         'ready' => [
+            'artisan:config:cache',
             'artisan:storage:link',
             'artisan:view:clear',
             'artisan:cache:clear',
