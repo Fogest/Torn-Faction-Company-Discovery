@@ -49,14 +49,14 @@ class UpdateFactionData implements ShouldQueue
         $response = Http::withOptions(
             [
             'verify' => false,
-            'base_uri' => env('TORN_API_BASE', "http://api.torn.com/"),
+            'base_uri' => config('custom.torn_api_base'),
             'timeout' => 5.0
             ]
         )->get(
             "faction/" . $this->faction->id,
             [
                 'selections' => 'basic',
-                'key' => env('TORN_API_KEY')
+                'key' => config('custom.torn_api_key')
                 ]
         );
 

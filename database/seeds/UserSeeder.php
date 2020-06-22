@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         App\User::updateOrCreate(
             ['name' => "jhvisser"],
             [
-                'password' => Hash::make(env('USER_ACCOUNT_PASSWORD', '123')),
+                'password' => Hash::make(config('custom.user_account_password')),
                 'email' => "justin@jhvisser.com",
             ]
         );
