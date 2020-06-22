@@ -8,6 +8,7 @@ variables:
   DB_PASSWORD: "$NUKE_DB_PASSWORD"
   REDIS_PASSWORD: "$REDIS_PASSWORD"
   TORN_API_KEY: "$TORN_API_KEY"
+  USER_ACCOUNT_PASSWORD: "$USER_ACCOUNT_PASSWORD"
 
 .init_ssh: &init_ssh |
   eval $(ssh-agent -s)
