@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Nuclear Company Directory</title>
@@ -92,7 +92,7 @@
                                 {{ $company->name }}
                             </a>
                         </td>
-                        <td>{!! $company->type->name !!}</td>
+                        <td>{{ $company->type->name }}</td>
                         <td> {{ $company->rank }}</td>
                         <td> {{ $company->hired_employees }}/{{ $company->max_employees }}</td>
                     </tr>
