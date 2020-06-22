@@ -60,6 +60,12 @@ class UpdateFactionData implements ShouldQueue
                 ]
         );
 
+        if ($response->failed()) {
+            Log::error('Failed to connect to Torn API', ['response' => $response,
+                'faction' => $this->faction]);
+            return;
+        }
+
         Log::debug('Response', ['response' => $response]);
 
         $tornFactionData = $response->json();
