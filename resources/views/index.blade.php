@@ -92,7 +92,7 @@
                                 {{ $company->name }}
                             </a>
                         </td>
-                        <td>{{ $company->type->name }}</td>
+                        <td>{!! $company->type->name !!}</td>
                         <td> {{ $company->rank }}</td>
                         <td> {{ $company->hired_employees }}/{{ $company->max_employees }}</td>
                     </tr>
