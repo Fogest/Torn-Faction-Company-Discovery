@@ -23,4 +23,9 @@ class Player extends Model
     {
         return $this->company()->where('isOwner', true)->get('isOwner');
     }
+
+    public function recruited()
+    {
+        return $this->hasMany(PlayerRecruit::class);
+    }
 }

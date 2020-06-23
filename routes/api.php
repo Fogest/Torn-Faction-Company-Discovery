@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Resources\Recruit as RecruitResource;
+use App\PlayerRecruit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get(
-    '/user', function (Request $request) {
-        return $request->user();
-    }
-);
+//Route::middleware('auth:api')->get(
+//    '/user', function (Request $request) {
+//        return $request->user();
+//    }
+//);
+Route::get('/recruits', function () {
+    return RecruitResource::collection(PlayerRecruit::all());
+});
+Route::post('/recruits', 'RecruitController@store');

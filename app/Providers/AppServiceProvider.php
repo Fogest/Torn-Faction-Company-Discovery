@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\Recruit;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;

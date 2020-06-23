@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Resources\Recruit as RecruitResource;
+use App\PlayerRecruit;
 use Illuminate\Support\Facades\Route;
 
 /*
