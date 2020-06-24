@@ -168,9 +168,9 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['production'],
+                'queue' => ['default'],
                 'balance' => 'simple',
-                'processes' => 10,
+                'processes' => 3,
                 'tries' => 1,
             ],
         ],
