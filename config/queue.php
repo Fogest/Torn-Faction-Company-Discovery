@@ -69,6 +69,13 @@ return [
 
     ],
 
+    'rateLimits' => [
+        'default' => [ // queue name
+            'allows' => 75, // 1 job
+            'every' => 60 // per 5 seconds
+        ]
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Failed Queue Jobs
