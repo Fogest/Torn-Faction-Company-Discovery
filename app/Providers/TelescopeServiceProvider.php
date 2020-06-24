@@ -22,15 +22,13 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         Telescope::filter(
             function (IncomingEntry $entry) {
-                if ($this->app->environment('local') || $this->app->environment('staging')) {
-                    return true;
-                }
+                return true;
 
-                return $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
+//                return $entry->isReportableException() ||
+//                   $entry->isFailedRequest() ||
+//                   $entry->isFailedJob() ||
+//                   $entry->isScheduledTask() ||
+//                   $entry->hasMonitoredTag();
             }
         );
     }
