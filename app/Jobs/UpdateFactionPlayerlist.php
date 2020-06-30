@@ -71,7 +71,7 @@ class UpdateFactionPlayerlist implements ShouldQueue
                 Log::info("Updating '{$playerUpdate->name}' with new data", ['playerUpdate' => $playerUpdate]);
                 UpdatePlayer::dispatch($playerUpdate);
             } else {
-                Log::debug("Player data fresh, no update performed", ['playerUpdate' => $playerUpdate]);
+//                Log::debug("Player data fresh, no update performed", ['playerUpdate' => $playerUpdate]);
             }
         }
 
