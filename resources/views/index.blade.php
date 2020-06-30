@@ -89,7 +89,7 @@
                         </td>
                         <td>
                             <a href='https://www.torn.com/joblist.php#/p=corpinfo&userID={{ $company->id }}'>
-                                {!! html_entity_decode($company->name) !!}
+                                {{ $company->name }}
                             </a>
                         </td>
                         <td>{{ $company->type->name }}</td>
