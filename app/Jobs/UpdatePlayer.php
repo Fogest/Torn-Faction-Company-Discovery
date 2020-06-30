@@ -68,7 +68,8 @@ class UpdatePlayer implements ShouldQueue
         );
         $tornPlayerData = $response->json();
 
-        if ($tornPlayerData['job']['position'] === "Director") {
+        $company = Company::where('player_id', $this->player->id);
+        if ($company && $tornPlayerData['job']['position'] === "Director") {
             $company = Company::updateOrCreate(
                 [
                     'id' => $tornPlayerData['job']['company_id']
@@ -81,6 +82,8 @@ class UpdatePlayer implements ShouldQueue
             );
             Log::info("Updating company '{$company->name}'' now", ['company' => $company]);
             UpdateCompany::dispatch($this->player, $company);
+        } elseif ($company) {
+            $company->delete();
         }
 
         $this->player->last_complete_update_at = Carbon::now();
