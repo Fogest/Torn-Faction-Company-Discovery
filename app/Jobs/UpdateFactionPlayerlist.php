@@ -21,6 +21,17 @@ class UpdateFactionPlayerlist implements ShouldQueue
     protected $players;
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware()
+    {
+        return [new RateLimited];
+    }
+
+
+    /**
      * Create a new job instance.
      *
      * @param Faction $faction The faction the players are in

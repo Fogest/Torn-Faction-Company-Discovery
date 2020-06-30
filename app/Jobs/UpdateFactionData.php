@@ -20,6 +20,17 @@ class UpdateFactionData implements ShouldQueue
     protected $faction;
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware()
+    {
+        return [new RateLimited];
+    }
+
+
+    /**
      * Create a new job instance.
      *
      * @param Faction $faction
