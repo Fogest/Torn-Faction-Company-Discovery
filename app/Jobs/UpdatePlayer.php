@@ -68,7 +68,7 @@ class UpdatePlayer implements ShouldQueue
         );
         $tornPlayerData = $response->json();
 
-        $company = Company::where('player_id', $this->player->id);
+        $company = Company::where('player_id', $this->player->id)->first();
         if ($company && isset($company->id)) {
             if ($company->id != $tornPlayerData['job']['company_id']) {
                 $company->delete();
