@@ -92,4 +92,15 @@ class UpdatePlayer implements ShouldQueue
         $this->player->last_complete_update_at = Carbon::now();
         $this->player->save();
     }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(\Throwable $exception)
+    {
+        Log::error("The job failed :(", ['exception' => $exception]);
+    }
 }
