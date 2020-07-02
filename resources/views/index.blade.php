@@ -88,7 +88,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href='https://www.torn.com/joblist.php#/p=corpinfo&userID={{ $company->id }}'>
+                            <a href='https://www.torn.com/joblist.php#/p=corpinfo&ID={{ $company->id }}'>
                                 {!! html_entity_decode($company->name) !!}
                             </a>
                         </td>
