@@ -69,10 +69,12 @@ class UpdatePlayer implements ShouldQueue
         $tornPlayerData = $response->json();
 
         $company = Company::where('player_id', $this->player->id);
-        if ($company && $tornPlayerData['job']['position'] === "Director") {
+        if ($company && isset($company->id)) {
             if ($company->id != $tornPlayerData['job']['company_id']) {
                 $company->delete();
             }
+        }
+        if ($tornPlayerData['job']['position'] === "Director") {
             $company = Company::updateOrCreate(
                 [
                     'id' => $tornPlayerData['job']['company_id']
