@@ -21,6 +21,17 @@ class CompanyController extends Controller
     }
 
     /**
+     * Display a listing of the resource with debugging
+     *
+     * @return Response
+     */
+    public function debug()
+    {
+        $companies = Company::all();
+        return view('debug', compact('companies'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response
