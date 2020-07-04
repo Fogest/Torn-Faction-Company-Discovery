@@ -63,17 +63,10 @@ return [
             'driver' => 'redis',
             'connection' => 'default',
             'queue' => env('REDIS_QUEUE', 'default'),
-            'retry_after' => 90,
+            'retry_after' => 70,
             'block_for' => null,
         ],
 
-    ],
-
-    'rateLimits' => [
-        'default' => [ // queue name
-            'allows' => 75, // 1 job
-            'every' => 60 // per 5 seconds
-        ]
     ],
 
     /*

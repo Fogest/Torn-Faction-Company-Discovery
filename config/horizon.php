@@ -84,7 +84,7 @@ return [
     */
 
     'waits' => [
-        'redis:default' => 60,
+        'redis:default' => 65,
     ],
 
     /*
@@ -172,6 +172,7 @@ return [
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 5,
+                'timeout' => 60,
             ],
         ],
 
@@ -182,6 +183,7 @@ return [
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
+                'timeout' => 60,
             ],
         ],
 
@@ -192,6 +194,7 @@ return [
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
+                'timeout' => 60,
             ],
         ],
     ],
