@@ -10,10 +10,10 @@
     <link rel="manifest" href="{{ URL::asset('img/site.webmanifest') }}">
 
     <title>{{ config('app.name') }} - @yield('title')</title>
-    <meta property="og:title" content="{{ config('app.name') }} - @yield('title')" />
-    <meta property="og:url" content="{{ Request::url() }}" />
-    <meta property="og:image" content="{{ URL::asset('img/og-image.png') }})" />
+    <meta property="og:title" content="{{ config('app.name') }} - @yield('title', 'Home')" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:image" content="{{ URL::asset('img/og-image.png') }}" />
     <meta property="og:description" content="@yield('description', 'The Nuclear Project website provides you with a set of tools created by its faction members to aid in the Torn journey')" />
 
     <!-- Fonts -->
