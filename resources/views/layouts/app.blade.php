@@ -13,6 +13,8 @@
     <meta property="og:title" content="@yield('title')" />
     <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:image" content="{{ URL::asset('img/og-image.png') }})" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1200" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="@yield('description', 'The Nuclear Project website provides you with a set of tools created by its faction members to aid in the Torn journey')" />
 
