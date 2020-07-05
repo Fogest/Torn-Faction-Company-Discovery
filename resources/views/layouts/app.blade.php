@@ -4,7 +4,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Nuclear Company Directory</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ URL::asset('img/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ URL::asset('img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('img/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ URL::asset('img/site.webmanifest') }}">
+
+    <title>{{ config('app.name') }} - @yield('title')</title>
+    <meta property="og:title" content="@yield('title')" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:image" content="{{ URL::asset('img/og-image.png') }})" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="@yield('description', 'The Nuclear Project website provides you with a set of tools created by its faction members to aid in the Torn journey')" />
 
     <!-- Fonts -->
 {{--        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">--}}
