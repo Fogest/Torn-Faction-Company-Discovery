@@ -13,6 +13,7 @@
     <meta property="og:title" content="{{ config('app.name') }} - @yield('title')" />
     <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:image" content="{{ URL::asset('img/og-image.png') }})" />
+    <meta property="og:image:secure_url" content="{{ URL::asset('img/og-image.png') }})" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="1200" />
