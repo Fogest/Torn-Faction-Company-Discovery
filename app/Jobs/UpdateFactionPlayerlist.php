@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Company;
 use App\Faction;
 use App\Jobs\Middleware\RateLimited;
 use App\Player;
@@ -80,6 +79,5 @@ class UpdateFactionPlayerlist implements ShouldQueue
 
         //Delete any ID's that were not updated via the API
         Player::where('faction_id', $this->faction->id)->whereNotIn('id', $updatedPlayerIds)->delete();
-        Company::whereNotIn('player_id', $updatedPlayerIds)->delete();
     }
 }
