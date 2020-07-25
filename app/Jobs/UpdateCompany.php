@@ -71,6 +71,6 @@ class UpdateCompany implements ShouldQueue
         $this->company->max_employees = $tornCompanyData['employees_capacity'];
         $this->company->save();
 
-        Log::info("Finished updating company '{$this->company->name}' complete", ['company' => $this->company]);
+        Log::info("Finished updating extra company '{$this->company->name}' complete", ['company' => $this->company]);
     }
 }

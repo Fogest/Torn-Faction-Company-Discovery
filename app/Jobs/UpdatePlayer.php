@@ -70,25 +70,35 @@ class UpdatePlayer implements ShouldQueue
 
         $company = Company::where('player_id', $this->player->id)->first();
         if ($company && isset($company->id)) {
+            // Player has company, current API company id diff from DB ID,
+            // delete DB company and treat as "new" company
             if ($company->id != $tornPlayerData['job']['company_id']) {
                 $company->delete();
+                Log::info("Deleting company '{$company->name}'' (Company ID Stale in DB)", ['company' => $company]);
             }
         }
         if ($tornPlayerData['job']['position'] === "Director") {
-            $company = Company::updateOrCreate(
-                [
-                    'id' => $tornPlayerData['job']['company_id']
-                ],
-                [
-                    'name' => $tornPlayerData['job']['company_name'],
-                    'player_id' => $this->player->id,
-                    'isOwner' => true
-                ]
-            );
-            Log::info("Updating company '{$company->name}'' now", ['company' => $company]);
+            // Company exists and director, update & save company.
+            if ($company && isset($company->id)) {
+                $company['name'] = $tornPlayerData['job']['company_name'];
+                $company['player_id'] = $this->player->id;
+                $company['isOwner'] = true;
+                $company->save();
+                Log::info("Updating company '{$company->name}'' now", ['company' => $company]);
+            } else {
+                // Is a director, no company in DB, create it!
+                $company = new Company();
+                $company['id'] = $tornPlayerData['job']['company_id'];
+                $company['name'] = $tornPlayerData['job']['company_name'];
+                $company['player_id'] = $this->player->id;
+                $company['isOwner'] = true;
+                $company->save();
+                Log::info("Creating company '{$company->name}'' now", ['company' => $company]);
+            }
             UpdateCompany::dispatch($this->player, $company);
         } elseif ($company) {
             $company->delete();
+            Log::info("Deleting company '{$company->name}'' (no longer director)", ['company' => $company]);
         }
 
         $this->player->last_complete_update_at = Carbon::now();
