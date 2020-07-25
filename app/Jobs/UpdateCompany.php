@@ -64,12 +64,13 @@ class UpdateCompany implements ShouldQueue
             ]
         );
         $tornCompanyData = $response->json()['company'];
+        $company = Company::where('player_id', $this->player->id)->first();
 
-        $this->company->company_type = $tornCompanyData['company_type'];
-        $this->company->rank = $tornCompanyData['rating'];
-        $this->company->hired_employees = $tornCompanyData['employees_hired'];
-        $this->company->max_employees = $tornCompanyData['employees_capacity'];
-        $this->company->save();
+        $company->company_type = $tornCompanyData['company_type'];
+        $company->rank = $tornCompanyData['rating'];
+        $company->hired_employees = $tornCompanyData['employees_hired'];
+        $company->max_employees = $tornCompanyData['employees_capacity'];
+        $company->save();
 
         Log::info("Finished updating extra company '{$this->company->name}' complete", ['company' => $this->company]);
     }
