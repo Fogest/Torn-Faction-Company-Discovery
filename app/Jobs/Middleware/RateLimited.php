@@ -19,7 +19,7 @@ class RateLimited
     {
         // Allow 75 every 60 is normal, dropped to 10 for testing
         Redis::throttle('torn-api')
-            ->allow(75)->every(60)->block(60)
+            ->allow(85)->every(60)->block(60)
             ->then(
                 function () use ($job, $next) {
                     // Lock obtained...
