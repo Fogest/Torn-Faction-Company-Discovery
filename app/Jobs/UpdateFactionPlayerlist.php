@@ -20,6 +20,8 @@ class UpdateFactionPlayerlist implements ShouldQueue
     protected $faction;
     protected $players;
 
+    public $timeout = 1200;
+
     /**
      * Get the middleware the job should pass through.
      *

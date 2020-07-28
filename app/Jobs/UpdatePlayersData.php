@@ -12,6 +12,8 @@ class UpdatePlayersData implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $timeout = 1200;
+
     /**
      * Determine the time at which the job should timeout.
      *

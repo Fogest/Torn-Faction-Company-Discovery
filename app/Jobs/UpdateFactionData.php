@@ -19,6 +19,8 @@ class UpdateFactionData implements ShouldQueue
 
     protected $faction;
 
+    public $timeout = 1200;
+
     /**
      * Get the middleware the job should pass through.
      *

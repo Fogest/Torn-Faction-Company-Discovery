@@ -20,6 +20,8 @@ class UpdateCompany implements ShouldQueue
     protected $player;
     protected $company;
 
+    public $timeout = 1200;
+
     /**
      * Get the middleware the job should pass through.
      *

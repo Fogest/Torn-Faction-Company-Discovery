@@ -25,6 +25,8 @@ class UpdatePlayer implements ShouldQueue
 
     protected $player;
 
+    public $timeout = 1200;
+
     /**
      * Get the middleware the job should pass through.
      *
