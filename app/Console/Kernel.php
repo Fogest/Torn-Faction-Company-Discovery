@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->job(new UpdateAllFactionData)->hourly();
+        $schedule->command('telescope:prune --hours=48')->daily();
     }
 
     /**
