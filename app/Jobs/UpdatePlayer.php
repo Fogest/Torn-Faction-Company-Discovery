@@ -84,7 +84,7 @@ class UpdatePlayer implements ShouldQueue
             // delete DB company and treat as "new" company
             if ($company->id != $tornPlayerData['job']['company_id']) {
                 $company->delete();
-                Log::info("Deleting company '{$company->name}'' (Company ID Stale in DB)", ['company' => $company]);
+                Log::info("Deleting company '{$company->name}' (Company ID Stale in DB)", ['company' => $company]);
             }
         }
         if ($tornPlayerData['job']['position'] === "Director") {
@@ -94,7 +94,7 @@ class UpdatePlayer implements ShouldQueue
                 $company['player_id'] = $this->player->id;
                 $company['isOwner'] = true;
                 $company->save();
-                Log::info("Updating company '{$company->name}'' now", ['company' => $company]);
+                Log::info("Updating company '{$company->name}' now", ['company' => $company]);
             } else {
                 // Is a director, no company in DB, create it!
                 $company = new Company();
@@ -103,12 +103,12 @@ class UpdatePlayer implements ShouldQueue
                 $company['player_id'] = $this->player->id;
                 $company['isOwner'] = true;
                 $company->save();
-                Log::info("Creating company '{$company->name}'' now", ['company' => $company]);
+                Log::info("Creating company '{$company->name}' now", ['company' => $company]);
             }
             UpdateCompany::dispatch($this->player, $company);
         } elseif ($company) {
             $company->delete();
-            Log::info("Deleting company '{$company->name}'' (no longer director)", ['company' => $company]);
+            Log::info("Deleting company '{$company->name}' (no longer director)", ['company' => $company]);
         }
 
         $this->player->last_complete_update_at = Carbon::now();

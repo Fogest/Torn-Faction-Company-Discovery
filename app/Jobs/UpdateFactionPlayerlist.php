@@ -63,27 +63,30 @@ class UpdateFactionPlayerlist implements ShouldQueue
     {
         $updatedPlayerIds = [];
         foreach ($this->players as $player) {
-            $playerUpdate = Player::updateOrCreate(
-                [
-                    'id' => $player['id'],
-                ],
-                [
-                    'faction_id' => $player['faction_id'],
-                    'name' => $player['name'],
-                ]
-            );
-
+            $playerModel = Player::where('id', $player['id'])->first();
+            if ($player && isset($player->id)) {
+                // Player exists, lets update data
+                $playerModel['faction_id'] = $player['faction_id'];
+                $playerModel['name'] = $player['name'];
+                $playerModel->save();
+                Log::info("Updated player '{$playerModel->name}'", ['playerModel' => $playerModel]);
+            } else {
+                $playerModel = new Player();
+                $playerModel['id'] = $player['id'];
+                $playerModel['faction_id'] = $player['faction_id'];
+                $playerModel['name'] = $player['name'];
+                $playerModel->save();
+                Log::info("Created player '{$playerModel->name}'", ['playerModel' => $playerModel]);
+            }
             // Storing id's of records updated
-            $updatedPlayerIds[] = $playerUpdate->id;
+            $updatedPlayerIds[] = $playerModel->id;
 
             // If it's a new player or the player was last updated awhile ago, then get new data!
-            if ($playerUpdate->wasRecentlyCreated ||
-                $playerUpdate->last_complete_update_at == null ||
-                Carbon::parse($playerUpdate->last_complete_update_at)->diffInHours(Carbon::now()) >= 6) {
-                Log::info("Updating '{$playerUpdate->name}' with new data", ['playerUpdate' => $playerUpdate]);
-                UpdatePlayer::dispatch($playerUpdate);
-            } else {
-//                Log::debug("Player data fresh, no update performed", ['playerUpdate' => $playerUpdate]);
+            if ($playerModel->wasRecentlyCreated ||
+                $playerModel->last_complete_update_at == null ||
+                Carbon::parse($playerModel->last_complete_update_at)->diffInHours(Carbon::now()) >= 6) {
+                Log::info("Dispatching full player update for '{$playerModel->name}'", ['playerModel' => $playerModel]);
+                UpdatePlayer::dispatch($playerModel);
             }
         }
 
