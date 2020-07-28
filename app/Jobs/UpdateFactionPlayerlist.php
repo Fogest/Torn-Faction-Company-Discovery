@@ -66,7 +66,7 @@ class UpdateFactionPlayerlist implements ShouldQueue
         $updatedPlayerIds = [];
         foreach ($this->players as $player) {
             $playerModel = Player::where('id', $player['id'])->first();
-            if ($player && isset($player->id)) {
+            if ($playerModel && isset($playerModel->id)) {
                 // Player exists, lets update data
                 $playerModel['faction_id'] = $player['faction_id'];
                 $playerModel['name'] = $player['name'];
