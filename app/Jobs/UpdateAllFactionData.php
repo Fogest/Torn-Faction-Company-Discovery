@@ -14,6 +14,16 @@ class UpdateAllFactionData implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Determine the time at which the job should timeout.
+     *
+     * @return \DateTime
+     */
+    public function retryUntil()
+    {
+        return now()->addMinutes(20);
+    }
+
+    /**
      * Create a new job instance.
      *
      * @return void

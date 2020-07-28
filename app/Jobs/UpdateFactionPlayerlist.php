@@ -30,6 +30,16 @@ class UpdateFactionPlayerlist implements ShouldQueue
         return [new RateLimited];
     }
 
+    /**
+     * Determine the time at which the job should timeout.
+     *
+     * @return \DateTime
+     */
+    public function retryUntil()
+    {
+        return now()->addMinutes(20);
+    }
+
 
     /**
      * Create a new job instance.
