@@ -5,6 +5,8 @@
 A list of all of the companies run by Nuclear Faction family members. Companies with positions open are highlighted.
 @endsection
 
+@include('widgets.login')
+
 @section('content')
 <table id='directory-table' class='display'>
     <thead>
