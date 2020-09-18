@@ -20,12 +20,12 @@ A list of all of the companies run by Nuclear Faction family members. Companies 
         @forelse ($companies as $company)
             <tr>
                 <td>
-                    <a href='https://www.torn.com/profiles.php?XID={{ $company->player->id }}'>
+                    <a target="_blank" href='https://www.torn.com/profiles.php?XID={{ $company->player->id }}'>
                         {{ $company->player->name }}
                     </a>
                 </td>
                 <td>
-                    <a href='https://www.torn.com/joblist.php#/p=corpinfo&ID={{ $company->id }}'>
+                    <a target="_blank" href='https://www.torn.com/joblist.php#/p=corpinfo&ID={{ $company->id }}'>
                         {!! html_entity_decode($company->name) !!}
                     </a>
                 </td>
