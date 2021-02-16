@@ -10,11 +10,14 @@ class RecruitController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        $recruits = PlayerRecruit::all();
+//        dd($recruits[0]->recruiter->name);
+
+        return view('recruit.index', compact('recruits'));
     }
 
     /**

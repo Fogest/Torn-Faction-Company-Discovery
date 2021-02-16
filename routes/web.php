@@ -19,3 +19,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'CompanyController@index');
 Route::get('/debug', 'CompanyController@debug');
 Route::get('/update', 'FactionController@index');
+
+Route::get('/recruit', 'RecruitController@index');
