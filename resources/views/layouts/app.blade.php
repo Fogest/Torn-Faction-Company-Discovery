@@ -85,6 +85,7 @@
 
             $('#recruiter-table').DataTable({
                 "paging": true,
+                "pageLength": 100,
                 "order": [[4, 'dsc']],
                 "columnDefs": [
                     {
