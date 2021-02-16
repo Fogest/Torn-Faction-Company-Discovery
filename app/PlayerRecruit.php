@@ -12,6 +12,6 @@ class PlayerRecruit extends Model
 
     public function recruiter()
     {
-        return $this->hasOne(Player::class);
+        return $this->hasOne(Player::class, 'id', 'recruited_by_id');
     }
 }
