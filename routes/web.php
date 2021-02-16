@@ -21,3 +21,4 @@ Route::get('/debug', 'CompanyController@debug');
 Route::get('/update', 'FactionController@index');
 
 Route::get('/recruit', 'RecruitController@index');
+Route::get('/recruit/update', 'RecruitController@batch');

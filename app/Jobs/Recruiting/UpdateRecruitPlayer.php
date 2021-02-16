@@ -66,9 +66,14 @@ class UpdateRecruitPlayer implements ShouldQueue
         $tornPlayerData = $response->json();
 
         // Faction ID is 0 when they are in no faction.
-        if ((int) $tornPlayerData['faction']['faction_id'] != 0) {
-            $this->recruit['faction_id'] = $tornPlayerData['faction']['faction_id'];
-            $this->recruit['faction_name'] = $tornPlayerData['faction']['faction_name'];
+        if (isset($tornPlayerData['faction'])) {
+            if ((int) $tornPlayerData['faction']['faction_id'] != 0) {
+                $this->recruit['faction_id'] = $tornPlayerData['faction']['faction_id'];
+                $this->recruit['faction_name'] = $tornPlayerData['faction']['faction_name'];
+            } else {
+                $this->recruit['faction_id'] = null;
+                $this->recruit['faction_name'] = null;
+            }
 
             // Check if the faction id is in the factions table (this table only
             // contains Nuke factions, thus implies they are recruited!)
@@ -77,9 +82,11 @@ class UpdateRecruitPlayer implements ShouldQueue
             if ($faction && $this->recruit->is_accepted != true) {
                 $this->recruit['is_accepted'] = true;
             }
-        }
-        if ($this->recruit->isDirty()) {
-            $this->recruit->save();
+            if ($this->recruit->isDirty()) {
+                $this->recruit->save();
+            } else {
+                $this->recruit->touch();
+            }
         }
     }
 

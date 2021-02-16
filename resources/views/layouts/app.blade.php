@@ -54,6 +54,7 @@
 
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    @stack('scripts')
     <script type="text/javascript" charset="utf8">
         $(document).ready( function () {
             $('#directory-table').DataTable({
@@ -81,22 +82,6 @@
 
             $('#directory-table-debug').DataTable({
                 "paging": false,
-            });
-
-            $('#recruiter-table').DataTable({
-                "paging": true,
-                "pageLength": 50,
-                "order": [[4, 'dsc']],
-                "columnDefs": [
-                    {
-                        targets: [0,1,2,3,4,5],
-                        className: 'dt-body-center'
-                    }
-                ],
-                "rowCallback": function(row, data, index) {
-                    if(data[3] === "Yes")
-                        $('td', row).css('background-color', '#b1ffb1');
-                }
             });
         } );
     </script>

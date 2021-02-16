@@ -5,6 +5,28 @@
     A hub for to see some of the data gathered from the Nuclear Recruiting script.
 @endsection
 
+@push('scripts')
+    <script type="text/javascript" charset="utf8">
+        $(document).ready( function () {
+            $('#recruiter-table').DataTable({
+                "paging": true,
+                "pageLength": 50,
+                "order": [[4, 'dsc']],
+                "columnDefs": [
+                    {
+                        targets: [0, 1, 2, 3, 4, 5],
+                        className: 'dt-body-center'
+                    }
+                ],
+                "rowCallback": function (row, data, index) {
+                    if (data[3] === "Yes")
+                        $('td', row).css('background-color', '#b1ffb1');
+                }
+            });
+        });
+    </script>
+@endpush
+
 {{--@include('widgets.login')--}}
 
 @section('content')
@@ -70,6 +92,6 @@
         echo "<b>Last Generated: </b>" . date("Y-m-d H:i") . " EST" . "<br>";
     @endphp
     @if (env('APP_ENV') === "local")
-        <b><a href='main.php'>Force Generate</a></b><br>
+        <b><a href='{{ url('/recruit/update') }}'>Force Generate</a></b><br>
     @endif
 @endsection

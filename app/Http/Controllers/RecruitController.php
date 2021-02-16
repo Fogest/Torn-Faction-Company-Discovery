@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Recruiting\BatchUpdatePlayers;
 use App\PlayerRecruit;
 use Illuminate\Http\Request;
 use App\Jobs\Recruiting\UpdateRecruitPlayer;
+
 class RecruitController extends Controller
 {
     /**
@@ -48,7 +50,7 @@ class RecruitController extends Controller
         $recruit = PlayerRecruit::create($attributes);
         if ($recruit) {
             // Get the Torn API data for the player async
-            UpdateRecruitPlayer::dispatch();
+            UpdateRecruitPlayer::dispatch($recruit);
             return response('Success', 200);
         } else {
             return response('Failure', 400);
@@ -98,5 +100,11 @@ class RecruitController extends Controller
     public function destroy(PlayerRecruit $playerRecruit)
     {
         //
+    }
+
+    public function batch()
+    {
+        BatchUpdatePlayers::dispatchNow();
+        return redirect('recruit/');
     }
 }

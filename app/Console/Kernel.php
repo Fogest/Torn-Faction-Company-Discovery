@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\Recruiting\BatchUpdatePlayers;
 use App\Jobs\UpdateAllFactionData;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->job(new UpdateAllFactionData)->hourly();
+        $schedule->job(new BatchUpdatePlayers)->everySixHours();
         $schedule->command('telescope:prune --hours=48')->daily();
     }
 
