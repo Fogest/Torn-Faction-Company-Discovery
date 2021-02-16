@@ -38,8 +38,12 @@
                     </a>
                 </td>
                 <td> {{ $recruit->is_accepted }}</td>
-                <td title="{{ $recruit->created_at }}">{{ $recruit->created_at->diffForHumans() }}</td>
-                <td title="{{ $recruit->updated_at }}">{{ $recruit->updated_at->diffForHumans() }}</td>
+                <td data-sort="{{ $recruit->created_at->timestamp }}" title="{{ $recruit->created_at }}">
+                    {{ $recruit->created_at->diffForHumans() }}
+                </td>
+                <td data-sort="{{ $recruit->updated_at->timestamp }}" title="{{ $recruit->updated_at }}">
+                    {{ $recruit->updated_at->diffForHumans() }}
+                </td>
             </tr>
         @empty
             <tr>

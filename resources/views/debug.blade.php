@@ -35,8 +35,12 @@
                 <td> {{ $company->rank }}</td>
                 <td> {{ $company->hired_employees }}/{{ $company->max_employees }}</td>
                 <td>{{ $company->isOwner }}</td>
-                <td title="{{ $company->created_at }}">{{ $company->created_at->diffForHumans() }}</td>
-                <td title="{{ $company->updated_at }}">{{ $company->updated_at->diffForHumans() }}</td>
+                <td data-sort="{{ $company->created_at->timestamp }}" title="{{ $company->created_at }}">
+                    {{ $company->created_at->diffForHumans() }}
+                </td>
+                <td data-sort="{{ $company->updated_at->timestamp }}" title="{{ $company->updated_at }}">
+                    {{ $company->updated_at->diffForHumans() }}
+                </td>
             </tr>
         @empty
             <tr>
