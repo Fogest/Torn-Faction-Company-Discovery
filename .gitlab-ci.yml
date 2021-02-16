@@ -112,7 +112,7 @@ staging:
     name: staging
     url: https://nuke-stage.jhvisser.com
   only:
-    - laravel
+    - master
 
 production:
   variables:
@@ -135,5 +135,5 @@ production:
     url: https://nuke.jhvisser.com
   when: manual
   only:
-    - laravel
+    - master
 
