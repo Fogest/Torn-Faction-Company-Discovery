@@ -93,6 +93,10 @@
                         className: 'dt-body-center'
                     }
                 ],
+                "rowCallback": function(row, data, index) {
+                    if(data[3] === "Yes")
+                        $('td', row).css('background-color', '#b1ffb1');
+                }
             });
         } );
     </script>

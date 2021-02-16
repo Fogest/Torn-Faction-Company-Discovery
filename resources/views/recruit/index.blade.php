@@ -13,7 +13,7 @@
         <tr>
             <th>Player</th>
             <th>Faction</th>
-            <th>Recruited By</th>
+            <th>Joined</th>
             <th>In Nuke?</th>
             <th>Created</th>
             <th>Updated</th>
@@ -37,7 +37,11 @@
                         {{ $recruit->recruiter->name }}
                     </a>
                 </td>
-                <td> {{ $recruit->is_accepted }}</td>
+                <td>
+                    @if ($recruit->is_accepted)
+                        Yes
+                    @endif
+                </td>
                 <td data-sort="{{ $recruit->created_at->timestamp }}" title="{{ $recruit->created_at }}">
                     {{ $recruit->created_at->diffForHumans() }}
                 </td>
