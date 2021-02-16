@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Nuclear Recruiting')
+@section('title', 'Recruiting')
 @section('description')
     A hub for to see some of the data gathered from the Nuclear Recruiting script.
 @endsection

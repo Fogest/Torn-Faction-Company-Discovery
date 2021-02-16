@@ -13,6 +13,7 @@ class FactionSeeder extends Seeder
     {
         DB::table('factions')->insertOrIgnore(
             [
+            ['id' => 366, 'name' => 'Evolution'],
             ['id' => 8954, 'name' => 'Nuclear Armageddon'],
             ['id' => 8085, 'name' => 'Nuclear Blast'],
             ['id' => 21028, 'name' => 'Nuclear Clinic'],
