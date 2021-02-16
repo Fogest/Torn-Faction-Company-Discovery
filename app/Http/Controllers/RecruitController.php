@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PlayerRecruit;
 use Illuminate\Http\Request;
-
+use App\Jobs\Recruiting\UpdateRecruitPlayer;
 class RecruitController extends Controller
 {
     /**
@@ -47,6 +47,8 @@ class RecruitController extends Controller
 
         $recruit = PlayerRecruit::create($attributes);
         if ($recruit) {
+            // Get the Torn API data for the player async
+            UpdateRecruitPlayer::dispatch();
             return response('Success', 200);
         } else {
             return response('Failure', 400);
