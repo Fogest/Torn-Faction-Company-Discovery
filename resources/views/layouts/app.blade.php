@@ -82,6 +82,17 @@
             $('#directory-table-debug').DataTable({
                 "paging": false,
             });
+
+            $('#recruiter-table').DataTable({
+                "paging": true,
+                "order": [[4, 'dsc']],
+                "columnDefs": [
+                    {
+                        targets: [0,1,2,3,4,5],
+                        className: 'dt-body-center'
+                    }
+                ],
+            });
         } );
     </script>
 

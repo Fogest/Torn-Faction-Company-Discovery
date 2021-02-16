@@ -8,7 +8,7 @@
 {{--@include('widgets.login')--}}
 
 @section('content')
-    <table id='directory-table' class='display'>
+    <table id='recruiter-table' class='display'>
         <thead>
         <tr>
             <th>Player</th>
