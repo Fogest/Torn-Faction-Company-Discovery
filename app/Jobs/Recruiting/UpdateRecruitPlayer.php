@@ -72,8 +72,9 @@ class UpdateRecruitPlayer implements ShouldQueue
 
             // Check if the faction id is in the factions table (this table only
             // contains Nuke factions, thus implies they are recruited!)
+            // If they are already marked as "accepted" don't mess with it.
             $faction = Faction::where('id', $this->recruit->faction_id)->first();
-            if ($faction) {
+            if ($faction && $this->recruit->is_accepted != true) {
                 $this->recruit['is_accepted'] = true;
             }
         }
