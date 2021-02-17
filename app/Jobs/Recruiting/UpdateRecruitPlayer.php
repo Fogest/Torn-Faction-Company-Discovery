@@ -65,6 +65,11 @@ class UpdateRecruitPlayer implements ShouldQueue
         );
         $tornPlayerData = $response->json();
 
+        Log::info(
+            "Updating recruit player '{$this->recruit->name}' now",
+            ['recruit' => $this->recruit, 'recruitData' => $tornPlayerData]
+        );
+
         // Faction ID is 0 when they are in no faction.
         if (isset($tornPlayerData['faction'])) {
             if ((int) $tornPlayerData['faction']['faction_id'] != 0) {

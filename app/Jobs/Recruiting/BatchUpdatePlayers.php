@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class BatchUpdatePlayers implements ShouldQueue
 {
@@ -50,6 +51,11 @@ class BatchUpdatePlayers implements ShouldQueue
             '<',
             Carbon::now()->subDays(7)
         )->limit(30)->get();
+
+        Log::info(
+            "Batch Updating Players now",
+            ['recruits' => $recruits]
+        );
         foreach ($recruits as $recruit) {
             UpdateRecruitPlayer::dispatch($recruit);
         }
