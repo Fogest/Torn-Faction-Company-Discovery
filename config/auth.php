@@ -67,14 +67,14 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'torn-api',
-//            'model' => App\User::class,
+//            'driver' => 'torn-api',
+            'model' => App\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'users' => [
+             'driver' => 'database',
+             'table' => 'users',
+         ],
     ],
 
     /*
