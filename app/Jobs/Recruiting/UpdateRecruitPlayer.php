@@ -66,7 +66,7 @@ class UpdateRecruitPlayer implements ShouldQueue
         $tornPlayerData = $response->json();
 
         Log::info(
-            "Updating recruit player '{$this->recruit->name}' now",
+            "Updating recruit player '{$this->recruit->player_name}' now",
             ['recruit' => $this->recruit, 'recruitData' => $tornPlayerData]
         );
 
