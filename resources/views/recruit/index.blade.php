@@ -35,8 +35,8 @@
         <tr>
             <th>Player</th>
             <th>Faction</th>
-            <th>Joined</th>
-            <th>In Nuke?</th>
+            <th>Recruiter</th>
+            <th>Joined?</th>
             <th>Created</th>
             <th>Updated</th>
         </tr>
