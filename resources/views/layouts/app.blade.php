@@ -30,47 +30,8 @@
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-
     <script type="text/javascript" charset="utf8" src="{{ mix('/js/app.js') }}"></script>
     @stack('scripts')
-    <script type="text/javascript" charset="utf8">
-        $(document).ready( function () {
-            let directoryTable = $('#directory-table').DataTable({
-                "visible": true,
-                "api": true,
-                "responsive": true,
-                "paging": false,
-                "order": [[2, 'asc'], [3, 'dsc']],
-                "columnDefs": [
-                    {
-                        targets: [0,1,2,3,4],
-                        className: 'dt-body-center'
-                    }
-                ],
-                "rowCallback": function(row, data, index) {
-                    let companyName = data[1].replace(/\s+/g, '').toLowerCase(); // Strip whitespace and make lowercase
-                    if (companyName.includes('hiring') || companyName.includes('hire')) {
-                        $('td', row).css('background-color', '#ffc8008c');
-                    }
-
-                    let positions = data[4];
-                    let positionsSplit = positions.split('/');
-                    if(positionsSplit[0] !== positionsSplit[1]) {
-                        $(row).find('td:eq(4)').css('background-color', '#f75e5ead');
-                    }
-                }
-            })
-            .columns.adjust()
-            .responsive.recalc();
-
-            $('#directory-table-debug').DataTable({
-                "paging": false,
-            });
-        } );
-    </script>
 
 </head>
 <body>
