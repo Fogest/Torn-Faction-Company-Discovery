@@ -9,8 +9,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('img/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ URL::asset('img/site.webmanifest') }}">
 
-    <link href="/css/app.css" rel="stylesheet">
-
     <title>{{ config('app.name') }} - @yield('title')</title>
     <meta property="og:title" content="{{ config('app.name') }} - @yield('title')" />
     <meta property="og:url" content="{{ Request::url() }}" />
@@ -29,11 +27,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
 
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+
     <!-- Scripts -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="/js/app.js"></script>
+
+    <script type="text/javascript" charset="utf8" src="{{ mix('/js/app.js') }}"></script>
     @stack('scripts')
     <script type="text/javascript" charset="utf8">
         $(document).ready( function () {
