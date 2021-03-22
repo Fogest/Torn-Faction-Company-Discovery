@@ -25,41 +25,22 @@
     <!-- Fonts -->
 {{--        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">--}}
 
-<!-- Styles -->
-    <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            /*font-family: 'Nunito', sans-serif;*/
-            /*font-weight: 200;*/
-            /*height: 100vh;*/
-            /*margin: 0;*/
-        }
-
-        .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-    </style>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
 
     <!-- Scripts -->
-
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="/js/app.js"></script>
     @stack('scripts')
     <script type="text/javascript" charset="utf8">
         $(document).ready( function () {
-            $('#directory-table').DataTable({
+            let directoryTable = $('#directory-table').DataTable({
+                "visible": true,
+                "api": true,
+                "responsive": true,
                 "paging": false,
                 "order": [[2, 'asc'], [3, 'dsc']],
                 "columnDefs": [
@@ -80,7 +61,9 @@
                         $(row).find('td:eq(4)').css('background-color', '#f75e5ead');
                     }
                 }
-            });
+            })
+            .columns.adjust()
+            .responsive.recalc();
 
             $('#directory-table-debug').DataTable({
                 "paging": false,
