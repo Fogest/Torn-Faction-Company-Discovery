@@ -9,6 +9,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('img/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ URL::asset('img/site.webmanifest') }}">
 
+    <link href="/css/app.css" rel="stylesheet">
+
     <title>{{ config('app.name') }} - @yield('title')</title>
     <meta property="og:title" content="{{ config('app.name') }} - @yield('title')" />
     <meta property="og:url" content="{{ Request::url() }}" />
