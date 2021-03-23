@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+/* / */
 Route::get('/', 'CompanyController@index');
 Route::get('/debug', 'CompanyController@debug');
 Route::get('/update', 'FactionController@index');
 
+/* /recruit/ */
 Route::get('/recruit', 'RecruitController@index');
 Route::get('/recruit/update', 'RecruitController@batch');
+
+Route::view('/time', 'time.index');

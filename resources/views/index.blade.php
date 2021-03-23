@@ -5,6 +5,39 @@
 A list of all of the companies run by Nuclear Faction family members. Companies with positions open are highlighted.
 @endsection
 
+@push('scripts')
+    <script type="text/javascript" charset="utf8">
+        $(document).ready( function () {
+            let directoryTable = $('#directory-table').DataTable({
+                "visible": true,
+                "api": true,
+                "responsive": true,
+                "paging": false,
+                "order": [[2, 'asc'], [3, 'dsc']],
+                "columnDefs": [
+                    {
+                        targets: [0, 1, 2, 3, 4],
+                        className: 'dt-body-center'
+                    }
+                ],
+                "rowCallback": function (row, data, index) {
+                    let companyName = data[1].replace(/\s+/g, '').toLowerCase(); // Strip whitespace and make lowercase
+                    if (companyName.includes('hiring') || companyName.includes('hire')) {
+                        $('td', row).css('background-color', '#ffc8008c');
+                    }
+
+                    let positions = data[4];
+                    let positionsSplit = positions.split('/');
+                    if (positionsSplit[0] !== positionsSplit[1]) {
+                        $(row).find('td:eq(4)').css('background-color', '#f75e5ead');
+                    }
+                }
+            })
+                .columns.adjust()
+                .responsive.recalc();
+        });
+    </script>
+@endpush
 @section('content')
 <h1 class="text-center text-4xl">Nuclear Company Directory</h1>
 <p class="text-center text-opacity-60 italic">Data automatically updated within 6 hours of changes</p>

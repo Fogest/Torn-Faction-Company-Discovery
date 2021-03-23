@@ -1,4 +1,14 @@
 @extends('layouts.app')
+
+@push('scripts')
+    <script type="text/javascript" charset="utf8">
+        $(document).ready( function () {
+            $('#directory-table-debug').DataTable({
+                "paging": false,
+            });
+        });
+    </script>
+@endpush
 @section('content')
     <table id='directory-table-debug' class='display'>
         <thead>
