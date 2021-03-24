@@ -8,10 +8,13 @@
 @push('scripts')
     <script type="text/javascript" charset="utf8">
         class TimeCard {
-            constructor(id, title, hour = 0, minute = 0, second = 0, dayOfWeek = null,
+            constructor(id, title, recurring = true, multiplePerDay = false,
+                        hour = 0, minute = 0, second = 0, dayOfWeek = null,
                         year = null, month = null, day = null) {
                 this.id = id;
                 this.title = title;
+                this.recurring = recurring;
+                this.multiplePerDay = multiplePerDay;
                 this.hour = hour;
                 this.minute = minute;
                 this.second = second;
@@ -23,13 +26,44 @@
             createNextTime() {
                 let day = moment().utc()
                     .hour(this.hour).minute(this.minute).second(this.second);
-                if (day.isBefore(moment().utc()))
+
+                // If the event repeats multiple times per day, adjust for that specific case here...
+                if (this.multiplePerDay) {
+                    if (this.hour === 0)
+                        day.hour(moment().utc().hour());
+                    else {
+                        day.hour(this.hour);
+                        while (day.isBefore(moment().utc()))
+                            day.add(this.hour, 'h');
+                    }
+                    if (this.minute === 0)
+                        day.minute(moment().utc().minute());
+                    else {
+                        day.minute(this.minute);
+                        while (day.isBefore(moment().utc()))
+                            day.add(this.minute, 'm');
+                    }
+                    if (this.second === 0)
+                        day.second(moment().utc().second());
+                    else {
+                        day.second(this.second);
+                        while (day.isBefore(moment().utc()))
+                            day.add(this.second, 's');
+                    }
+                }
+
+                // If day already passed, and recurring, increment day.
+                if (this.recurring && day.isBefore(moment().utc()))
                     day.add(1, 'd');
+
+                // If the event is weekly then adjust for weekly specific time.
                 if (this.dayOfWeek != null) {
                     day.day(this.dayOfWeek);  // 0-6, 0 = Sunday, 1 = Monday, 6 = Saturday, etc...
                     if (day.isBefore(moment().utc()))
                         day.add(7, 'd');
                 }
+
+                // If year, month, day data is given ensure the created time has it.
                 if (this.year != null)
                     day.year(this.year);
                 if (this.month != null && Number.isInteger(this.month))
@@ -44,21 +78,24 @@
                 moment.relativeTimeThreshold('h', 30);
                 moment.relativeTimeThreshold('m', 60);
                 moment.relativeTimeThreshold('s', 60);
+                let minutes = "";
                 let day = this.createNextTime();
-                let dateText = day.local().format("ddd [@] ha");
+                if (day.minute() !== 0) minutes = ":mm";
+                let dateText = day.local().format("ddd [@] h" + minutes + "a");
                 if (day.local().isSame(moment(), 'day'))
-                    dateText = day.local().format("[Today @] ha");
+                    dateText = day.local().format("[Today @] h" + minutes + "a");
                 return day.fromNow()
                     + "</br>" + dateText;
             }
         }
 
         let cards = [
-            new TimeCard('company-day', 'Company Day', 18),
-            new TimeCard('torn-day', 'Torn Day'),
-            new TimeCard('company-week', 'Company Week', 18, 0, 0, 0),
-            new TimeCard('addiction-decay', 'Addiction Decay', 5, 30),
-            new TimeCard('chain', 'Chaining', 12, 0, 0, null, 2021, 03, 26)
+            new TimeCard('company-day', 'Company Day', true, false, 18),
+            new TimeCard('torn-day', 'Torn Day', true, false),
+            new TimeCard('company-week', 'Company Week', true, false, 18, 0, 0, 0),
+            new TimeCard('addiction-decay', 'Addiction Decay', true, false, 5, 30),
+            new TimeCard('chain', 'Chaining', false, false, 12, 0, 0, null, 2021, 3, 26),
+            new TimeCard('store-stock', 'Torn Store Restock', true, true, 0, 15),
         ];
 
         $(document).ready( function () {
