@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Recruiting')
+@section('title', 'Torn Time Tracker')
 @section('description')
-    A hub for to see some of the data gathered from the Nuclear Recruiting script.
+    A hub for of various important Torn Times displayed in your local time instead of TCT
 @endsection
 
 @push('scripts')
