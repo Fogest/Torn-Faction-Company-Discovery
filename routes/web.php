@@ -24,6 +24,8 @@ Route::get('/update', 'FactionController@index');
 Route::get('/recruit', 'RecruitController@index');
 Route::get('/recruit/update', 'RecruitController@batch');
 
-Route::view('/time', 'time.index');
+/* /time/ */
+Route::get('/time', 'TimeController@index');
 
+Route::post('/time', 'TimeController@store');
 Route::post('/time/api_key', 'PlayerController@addApiKey');

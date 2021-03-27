@@ -115,6 +115,7 @@ class PlayerController extends Controller
         $player->api_key = $apiKey;
         $player->save();
         $request->session()->put('player.api_key', $player->api_key);
+        $request->session()->put('player.id', $player->id);
         return 'Successfully saved API key to ' . $player->name . ' [' . $player->id . ']';
     }
 }

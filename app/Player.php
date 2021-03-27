@@ -28,4 +28,9 @@ class Player extends Model
     {
         return $this->hasMany(PlayerRecruit::class);
     }
+
+    public function times()
+    {
+        return $this->hasMany(Time::class);
+    }
 }

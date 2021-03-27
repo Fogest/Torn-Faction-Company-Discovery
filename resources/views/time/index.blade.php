@@ -27,7 +27,7 @@
                 this.month = month;
                 this.day = day;
             }
-            createNextTime() {
+            get createNextTime() {
                 let day = moment().utc()
                     .hour(this.hour).minute(this.minute).second(this.second);
                 // If the event repeats multiple times per day, adjust for that specific case here...
@@ -82,7 +82,7 @@
                 moment.relativeTimeThreshold('m', 60);
                 moment.relativeTimeThreshold('s', 60);
                 let minutes = "";
-                let day = this.createNextTime();
+                let day = this.createNextTime;
                 if (day.minute() !== 0) minutes = ":mm";
                 let dateText = day.local().format("ddd [@] h" + minutes + "a");
                 if (day.local().isSame(moment(), 'day'))
@@ -101,6 +101,13 @@
             new TimeCard('store-stock', 'Torn Store Restock', true, true, 0, 15),
         ];
         let userCards = [];
+        let userImportedCards = @json($times);
+        userImportedCards.forEach(function (time) {
+            let m = moment.unix(time.event_date_time).utc();
+            userCards.push(new TimeCard(time.event_id, time.event_name, time.recurring,
+                time.multiple_per_day, m.hour(), m.minute(), m.second(),
+                time.day_of_week, m.year(), m.month() + 1, m.date()));
+        });
 
         $(document).ready( function () {
             // Generate and insert the HTML for the default time cards
@@ -145,6 +152,18 @@
                 userCards.push(newEvent);
                 updateTimes();
                 $("#modal-new-countdown").dialog("close");
+
+                $.post("{{ url('/time/') }}", {
+                    _token: "{{ csrf_token() }}",
+                    event_id: cardId,
+                    event_name: cardTitle,
+                    recurring: newEvent.recurring ? 1 : 0,
+                    multiple_per_day: newEvent.multiplePerDay ? 1 : 0,
+                    day_of_week: newEvent.dayOfWeek,
+                    event_date_time: newEvent.createNextTime.unix()
+                }).done(function (data) {
+                   alert(data);
+                });
             });
 
             let playerApiKeySession = "{{ session('player.api_key') }}";
@@ -177,6 +196,9 @@
 
         function createDefaultCards() {
             cards.forEach(function (card) {
+                createNewCard(card.id, card.title);
+            });
+            userCards.forEach(function (card) {
                 createNewCard(card.id, card.title);
             });
             createNewCard('new-card', 'Create New Card');
