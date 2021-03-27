@@ -6,6 +6,10 @@
 @endsection
 
 @push('scripts')
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" charset="utf8">
         class TimeCard {
             constructor(id, title, recurring = true, multiplePerDay = false,
@@ -26,7 +30,6 @@
             createNextTime() {
                 let day = moment().utc()
                     .hour(this.hour).minute(this.minute).second(this.second);
-
                 // If the event repeats multiple times per day, adjust for that specific case here...
                 if (this.multiplePerDay) {
                     if (this.hour === 0)
@@ -97,10 +100,43 @@
             new TimeCard('chain', 'Chaining', false, false, 12, 0, 0, null, 2021, 3, 26),
             new TimeCard('store-stock', 'Torn Store Restock', true, true, 0, 15),
         ];
+        let userCards = [];
 
         $(document).ready( function () {
             // Generate and insert the HTML for the default time cards
             createDefaultCards();
+
+            $("#modal-new-countdown").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "fade",
+                    duration: 500
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 500
+                }
+            });
+            $( "#modal-date" ).datetimepicker({
+                dateFormat:'yy-mm-dd',
+            });
+
+            $("#new-card-button").click(function() {
+                $("#modal-new-countdown").dialog("open");
+            });
+
+            $("#modal-submit").click(function() {
+                let datetime = moment.utc($("#modal-date").val());
+                let cardTitle = $("#modal-title").val();
+                let cardId = cardTitle.replace(/\s+/g, '-').toLowerCase() + Date.now().toString();
+                let newEvent = new TimeCard(cardId, cardTitle, false, false,
+                    datetime.hour(), datetime.minute(), 0, null,
+                    datetime.year(), datetime.month() + 1, datetime.date());
+                userCards.push(newEvent);
+                updateTimes();
+                $("#modal-new-countdown").dialog("close");
+            });
+
             updateTimes();
             setInterval(updateTimes, 7500); //every 10 seconds update it.
         });
@@ -110,7 +146,17 @@
             $("#datetime").text(moment().format("ddd, hh:mma"))
 
             cards.forEach(function (card) {
-                $('#' + card.id).html(card.toString);
+                let element = $('#' + card.id);
+                if (element.length === 0)
+                    createNewCard(card.id, card.title);
+                element.html(card.toString);
+            });
+
+            userCards.forEach(function (card) {
+                let element = $('#' + card.id);
+                if (element.length === 0)
+                    createNewCard(card.id, card.title);
+                element.html(card.toString);
             });
         }
 
@@ -118,6 +164,12 @@
             cards.forEach(function (card) {
                 createNewCard(card.id, card.title);
             });
+            createNewCard('new-card', 'Create New Card');
+            $("#new-card").html(
+                '<button id="new-card-button"' +
+                ' class="btn btn-blue-outline">' +
+                'New' +
+                '</button>')
         }
 
         function createNewCard(id, title) {
@@ -126,7 +178,11 @@
                 "    <h2 class=\"text-2xl text-center\">"+ title +"</h2>\n" +
                 "    <p id=\""+ id +"\" class=\"text-center\"></p>\n" +
                 "</div></div>"
-            $("#card-holder").append(html);
+            let newCard = $("#new-card");
+            if (newCard.length)
+                newCard.parents().eq(1).before(html);
+            else
+                $("#card-holder").append(html);
         }
     </script>
 @endpush
@@ -142,6 +198,43 @@
     </main>
     <h2 class="text-center text-lg">Current local time: <span class="font-medium" id="datetime"></span></h2>
 
+    {{--  Modal for Creating New Countdown  --}}
+    <div id="modal-new-countdown" class="modal" title="Create New Countdown">
+        <div role="dialog">
+            <div id="modal-1-content">
+                <form class="w-full max-w-sm">
+                    <div class="md:flex md:items-center mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                Event
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="modal-title" type="text" placeholder="Event Name">
+                        </div>
+                    </div>
+                    <div class="md:flex md:items-center mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
+                                Time
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="modal-date" type="text" placeholder="">
+                        </div>
+                    </div>
+                    <div class="md:flex md:items-center">
+                        <div class="md:w-1/3"></div>
+                        <div class="md:w-2/3">
+                            <button id="modal-submit" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                                Add Event
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     @php
         //$time_end = microtime(true);
 
