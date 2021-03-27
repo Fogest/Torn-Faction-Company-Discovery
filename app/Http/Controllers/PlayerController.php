@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 
 class PlayerController extends Controller
 {
@@ -82,5 +83,38 @@ class PlayerController extends Controller
     public function destroy(Player $player)
     {
         //
+    }
+
+    public function addApiKey(Request $request)
+    {
+        $apiKey = $request->input('api_key');
+
+        $response = Http::withOptions(
+            [
+                'verify' => false,
+                'base_uri' => config('custom.torn_api_base'),
+                'timeout' => 5.0
+            ]
+        )->get(
+            "user/",
+            [
+                'selections' => 'profile',
+                'key' => $apiKey
+            ]
+        );
+        if ($response->failed() || $response->serverError()) {
+            return 'API Key invalid or Torn API is down';
+        }
+        $tornPlayerData = $response->json();
+        $playerId = $tornPlayerData['player_id'];
+
+        $player = Player::find($playerId);
+        if (!$player) {
+            return 'Player not in a Nuclear faction';
+        }
+        $player->api_key = $apiKey;
+        $player->save();
+        $request->session()->put('player.api_key', $player->api_key);
+        return 'Successfully saved API key to ' . $player->name . ' [' . $player->id . ']';
     }
 }

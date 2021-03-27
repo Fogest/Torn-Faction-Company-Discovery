@@ -125,6 +125,16 @@
                 $("#modal-new-countdown").dialog("open");
             });
 
+            $("#save-api-key").click(function () {
+               let apiKey = $("#api-key").val();
+               $.post("{{ url('/time/api_key') }}", {
+                   _token: "{{ csrf_token() }}",
+                   api_key: apiKey
+               }).done(function (data) {
+                   alert(data);
+               });
+            });
+
             $("#modal-submit").click(function() {
                 let datetime = moment.utc($("#modal-date").val());
                 let cardTitle = $("#modal-title").val();
@@ -136,6 +146,8 @@
                 updateTimes();
                 $("#modal-new-countdown").dialog("close");
             });
+
+            $("#api-key").val("{{ session('player.api_key') }}");
 
             updateTimes();
             setInterval(updateTimes, 7500); //every 10 seconds update it.
@@ -197,7 +209,7 @@
 {{--        <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="api-key">Torn API key</label>--}}
         <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
 
-        <button class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-1 rounded" type="button">Save Key</button>
+        <button id="save-api-key" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-1 rounded" type="button">Save Key</button>
     </form>
 
     <main id="card-holder"
@@ -220,7 +232,10 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="modal-title" type="text" placeholder="Event Name">
+                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full
+                                py-2 px-4 text-gray-700 leading-tight focus:outline-none
+                                focus:bg-white focus:border-purple-500" id="modal-title"
+                                       type="text" placeholder="Event Name">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-6">
