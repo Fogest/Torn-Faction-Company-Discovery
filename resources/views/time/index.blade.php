@@ -144,6 +144,7 @@
         function updateTimes() {
             // Current time/date
             $("#datetime").text(moment().format("ddd, hh:mma"))
+            $("#datetime-tct").text(moment().utc().format("ddd, hh:mma"))
 
             cards.forEach(function (card) {
                 let element = $('#' + card.id);
@@ -190,13 +191,22 @@
 {{--@include('widgets.login')--}}
 
 @section('content')
-    <h1 class="text-4xl text-center pb-3">Torn Important Times Tracker</h1>
+    <h1 class="text-4xl text-center pb-1">Torn Important Times Tracker</h1>
+
+    <form class="text-center mb-1" action="">
+{{--        <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="api-key">Torn API key</label>--}}
+        <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
+
+        <button class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-1 rounded" type="button">Save Key</button>
+    </form>
 
     <main id="card-holder"
           class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap">
         {{--    Dynamically inserted cards into here    --}}
     </main>
-    <h2 class="text-center text-lg">Current local time: <span class="font-medium" id="datetime"></span></h2>
+    <h2 class="text-center text-lg">Local Time: <span class="font-medium" id="datetime"></span></h2>
+    <h2 class="text-center text-lg">Torn Time: <span class="font-medium" id="datetime-tct"></span></h2>
+
 
     {{--  Modal for Creating New Countdown  --}}
     <div id="modal-new-countdown" class="modal" title="Create New Countdown">
