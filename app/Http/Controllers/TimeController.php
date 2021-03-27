@@ -15,14 +15,15 @@ class TimeController extends Controller
      */
     public function index()
     {
+        $times = [];
         $playerId = session('player.id', null);
         if (is_null($playerId)) {
-            return view('time.index');
+            return view('time.index', compact('times'));
         }
 
         $player =  Player::find($playerId);
         if (!$player) {
-            return view('time.index');
+            return view('time.index', compact('times'));
         }
 
         $times = $player->times;
