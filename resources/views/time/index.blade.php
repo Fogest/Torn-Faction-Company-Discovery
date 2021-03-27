@@ -147,7 +147,9 @@
                 $("#modal-new-countdown").dialog("close");
             });
 
-            $("#api-key").val("{{ session('player.api_key') }}");
+            let playerApiKeySession = "{{ session('player.api_key') }}";
+            if (playerApiKeySession.length)
+                $("#api-key").val("{{ session('player.api_key') }}");
 
             updateTimes();
             setInterval(updateTimes, 7500); //every 10 seconds update it.
@@ -205,7 +207,7 @@
 @section('content')
     <h1 class="text-4xl text-center pb-1">Torn Important Times Tracker</h1>
 
-    <form class="text-center mb-1" action="">
+    <form class="text-center mb-1" action="#">
 {{--        <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="api-key">Torn API key</label>--}}
         <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
 
