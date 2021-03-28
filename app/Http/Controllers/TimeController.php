@@ -97,11 +97,31 @@ class TimeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Time  $time
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Time $time)
+    public function destroy(Request $request)
     {
-        //
+        $time = Time::where('event_id', $request->event_id)->first();
+        $time->delete();
+        return 'Event Deleted';
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $times = [];
+        $playerId = session('player.id', null);
+        if (is_null($playerId)) {
+            return 'Unable to locate player session, please re-save API key';
+        }
+
+        $player =  Player::find($playerId);
+        if (!$player) {
+            return 'Unable to locate player session, please re-save API key';
+        }
+
+        $times = $player->times()->delete();
+        $player->api_key = null;
+        $player->save();
+        $request->session()->forget('player.api_key');
+        return 'API key and time data removed';
     }
 }

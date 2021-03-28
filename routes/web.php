@@ -29,3 +29,6 @@ Route::get('/time', 'TimeController@index');
 
 Route::post('/time', 'TimeController@store');
 Route::post('/time/api_key', 'PlayerController@addApiKey');
+
+Route::delete('/time', 'TimeController@destroy');
+Route::delete('/time/destroyAll', 'TimeController@destroyAll');

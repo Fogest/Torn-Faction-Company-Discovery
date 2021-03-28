@@ -166,6 +166,43 @@
                 });
             });
 
+            {{--$('#test').click(function() {--}}
+            {{--    $.ajax({--}}
+            {{--        url:  '{{ url('/time/') }}',--}}
+            {{--        type: 'DELETE',--}}
+            {{--        data: {--}}
+            {{--            _token: '{{ csrf_token() }}'--}}
+            {{--        },--}}
+            {{--        success: function (result) {--}}
+            {{--            alert(result);--}}
+            {{--            userCards.forEach(function(card) {--}}
+            {{--                let element = $("#" + card.id);--}}
+            {{--                element.parents().eq(1).remove();--}}
+            {{--            });--}}
+            {{--            $("#api-key").val('');--}}
+            {{--        }--}}
+            {{--    });--}}
+            {{--});--}}
+
+            $("#delete-all-api-data").click(function () {
+                $.ajax({
+                    url:  '{{ url('/time/destroyAll') }}',
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (result) {
+                       alert(result);
+                       userCards.forEach(function(card) {
+                           let element = $("#" + card.id);
+                           element.parents().eq(1).remove();
+                       });
+                       $("#api-key").val('');
+                       userCards = [];
+                    }
+                });
+            });
+
             let playerApiKeySession = "{{ session('player.api_key') }}";
             if (playerApiKeySession.length)
                 $("#api-key").val("{{ session('player.api_key') }}");
@@ -237,9 +274,13 @@
     </form>
 
     <main id="card-holder"
-          class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap">
+          class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap relative">
         {{--    Dynamically inserted cards into here    --}}
+        <span class="absolute bottom-0 right-0 text-purple-400 text-sm pr-1 pb-0.5 italic">
+            <a href="#" id="delete-all-api-data">Delete all API and time data</a>
+        </span>
     </main>
+
     <h2 class="text-center text-lg">Local Time: <span class="font-medium" id="datetime"></span></h2>
     <h2 class="text-center text-lg">Torn Time: <span class="font-medium" id="datetime-tct"></span></h2>
 
