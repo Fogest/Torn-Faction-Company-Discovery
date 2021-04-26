@@ -129,6 +129,10 @@
             });
 
             $("#new-card-button").click(function() {
+                if ($("#api-key").val() === "") {
+                    alert("Must have an API key saved at the top to create custom events");
+                    return;
+                }
                 $("#modal-new-countdown").dialog("open");
             });
 
@@ -185,24 +189,6 @@
                     cardTitleField.val("");
                 });
             });
-
-            {{--$('#test').click(function() {--}}
-            {{--    $.ajax({--}}
-            {{--        url:  '{{ url('/time/') }}',--}}
-            {{--        type: 'DELETE',--}}
-            {{--        data: {--}}
-            {{--            _token: '{{ csrf_token() }}'--}}
-            {{--        },--}}
-            {{--        success: function (result) {--}}
-            {{--            alert(result);--}}
-            {{--            userCards.forEach(function(card) {--}}
-            {{--                let element = $("#" + card.id);--}}
-            {{--                element.parents().eq(1).remove();--}}
-            {{--            });--}}
-            {{--            $("#api-key").val('');--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--});--}}
 
             $("#delete-all-api-data").click(function () {
                 $.ajax({
