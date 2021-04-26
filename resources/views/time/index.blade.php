@@ -271,7 +271,7 @@
 {{--@include('widgets.login')--}}
 
 @section('content')
-    <h1 class="text-4xl text-center pb-1">Torn Important Times Tracker</h1>
+    <h1 class="text-4xl text-center pb-1">Torn Time Tracker</h1>
 
     <form class="text-center mb-1" action="#">
 {{--        <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="api-key">Torn API key</label>--}}
