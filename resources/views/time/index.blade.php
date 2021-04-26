@@ -7,9 +7,8 @@
 
 @push('scripts')
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript" charset="utf8">
         class TimeCard {
             constructor(id, title, recurring = true, multiplePerDay = false,
@@ -123,8 +122,10 @@
                     duration: 500
                 }
             });
-            $( "#modal-date" ).datetimepicker({
-                dateFormat:'yy-mm-dd',
+
+            $("#modal-date").flatpickr({
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
             });
 
             $("#new-card-button").click(function() {
@@ -142,15 +143,32 @@
             });
 
             $("#modal-submit").click(function() {
-                let datetime = moment.utc($("#modal-date").val());
-                let cardTitle = $("#modal-title").val();
+                let dateField = $("#modal-date");
+                let cardTitleField = $("#modal-title");
+                let timezoneField = $("#modal-timezone");
+
+                let timezone = timezoneField.find(":selected").text();
+                let cardTitle = cardTitleField.val();
+                let datetime = dateField.val();
+
+                if (timezone === "tct")
+                    datetime = moment.utc(datetime);
+                else {
+                    datetime = moment(datetime);
+                    datetime.utc();
+                }
+
+
+                if (dateField.val() === "" || cardTitle === "") {
+                    alert("Both the title and date must be filled in, neither can be blank");
+                    return;
+                }
                 let cardId = cardTitle.replace(/\s+/g, '-').toLowerCase() + Date.now().toString();
                 let newEvent = new TimeCard(cardId, cardTitle, false, false,
                     datetime.hour(), datetime.minute(), 0, null,
                     datetime.year(), datetime.month() + 1, datetime.date());
                 userCards.push(newEvent);
                 updateTimes();
-                $("#modal-new-countdown").dialog("close");
 
                 $.post("{{ url('/time/') }}", {
                     _token: "{{ csrf_token() }}",
@@ -161,7 +179,10 @@
                     day_of_week: newEvent.dayOfWeek,
                     event_date_time: newEvent.createNextTime.unix()
                 }).done(function (data) {
-                   alert(data);
+                    alert(data);
+                    $("#modal-new-countdown").dialog("close");
+                    dateField.val("");
+                    cardTitleField.val("");
                 });
             });
 
@@ -218,14 +239,14 @@
             cards.forEach(function (card) {
                 let element = $('#' + card.id);
                 if (element.length === 0)
-                    createNewCard(card.id, card.title);
+                    element = createNewCard(card.id, card.title);
                 element.html(card.toString);
             });
 
             userCards.forEach(function (card) {
                 let element = $('#' + card.id);
                 if (element.length === 0)
-                    createNewCard(card.id, card.title);
+                    element = createNewCard(card.id, card.title);
                 element.html(card.toString);
             });
         }
@@ -256,6 +277,7 @@
                 newCard.parents().eq(1).before(html);
             else
                 $("#card-holder").append(html);
+            return $('#' + id);
         }
     </script>
 @endpush
@@ -291,25 +313,45 @@
                 <form class="w-full max-w-sm">
                     <div class="md:flex md:items-center mb-6">
                         <div class="md:w-1/3">
-                            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="modal-timezone">
+                                Timezone
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <select name="modal-timezone" id="modal-timezone"
+                                    class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full
+                                py-2 px-4 text-gray-700 leading-tight focus:outline-none
+                                focus:bg-white focus:border-purple-500">
+                                <option value="tct" selected>TCT</option>
+                                <option value="local">Local</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="md:flex md:items-center mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="modal-title">
                                 Event
                             </label>
                         </div>
                         <div class="md:w-2/3">
                                 <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full
                                 py-2 px-4 text-gray-700 leading-tight focus:outline-none
-                                focus:bg-white focus:border-purple-500" id="modal-title"
+                                focus:bg-white focus:border-purple-500" name="modal-title" id="modal-title"
                                        type="text" placeholder="Event Name">
                         </div>
                     </div>
                     <div class="md:flex md:items-center mb-6">
                         <div class="md:w-1/3">
-                            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
-                                Time
+                            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="modal-date">
+                                Date/Time
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="modal-date" type="text" placeholder="">
+                            <input class="bg-gray-200 appearance-none border-2
+                            border-gray-200 rounded w-full py-2 px-4 text-gray-700
+                             leading-tight focus:outline-none focus:bg-white
+                              focus:border-purple-500" id="modal-date" name="modal-date"
+                                   type="text" placeholder="">
                         </div>
                     </div>
                     <div class="md:flex md:items-center">
