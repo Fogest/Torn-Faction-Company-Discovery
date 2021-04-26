@@ -97,7 +97,6 @@
             new TimeCard('torn-day', 'Torn Day', true, false),
             new TimeCard('company-week', 'Company Week', true, false, 18, 0, 0, 0),
             new TimeCard('addiction-decay', 'Addiction Decay', true, false, 5, 30),
-            new TimeCard('chain', 'Chaining', false, false, 12, 0, 0, null, 2021, 3, 26),
             new TimeCard('store-stock', 'Torn Store Restock', true, true, 0, 15),
         ];
         let userCards = [];
