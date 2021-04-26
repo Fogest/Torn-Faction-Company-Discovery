@@ -273,23 +273,23 @@
 @section('content')
     <h1 class="text-4xl text-center pb-1">Torn Time Tracker</h1>
 
+    <main id="card-holder"
+          class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap relative">
+        {{--    Dynamically inserted cards into here    --}}
+    </main>
+
     <form class="text-center mb-1" action="#">
-{{--        <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="api-key">Torn API key</label>--}}
+        {{--        <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="api-key">Torn API key</label>--}}
         <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
 
         <button id="save-api-key" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-1 rounded" type="button">Save Key</button>
     </form>
-
-    <main id="card-holder"
-          class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap relative">
-        {{--    Dynamically inserted cards into here    --}}
-        <span class="absolute bottom-0 right-0 text-purple-400 text-sm pr-1 pb-0.5 italic">
-            <a href="#" id="delete-all-api-data">Delete all API and time data</a>
-        </span>
-    </main>
-
+    <h3 class="text-center text-base text-purple-500">All times shown are converted from TCT to your local time automatically</h3>
     <h2 class="text-center text-lg">Local Time: <span class="font-medium" id="datetime"></span></h2>
     <h2 class="text-center text-lg">Torn Time: <span class="font-medium" id="datetime-tct"></span></h2>
+{{--    <h3 class="text-center text-purple-400 text-sm pr-1 pb-0.5 italic">--}}
+{{--            <a href="#" id="delete-all-api-data">Delete all API and time data</a>--}}
+{{--    </h3>--}}
 
 
     {{--  Modal for Creating New Countdown  --}}
