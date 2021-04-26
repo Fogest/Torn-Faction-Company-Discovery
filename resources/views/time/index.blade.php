@@ -155,7 +155,7 @@
                 let cardTitle = cardTitleField.val();
                 let datetime = dateField.val();
 
-                if (timezone === "tct")
+                if (timezone.toLowerCase() === "tct")
                     datetime = moment.utc(datetime);
                 else {
                     datetime = moment(datetime);
