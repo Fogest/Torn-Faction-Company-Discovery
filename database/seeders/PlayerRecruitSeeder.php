@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\PlayerRecruit;
 use Illuminate\Database\Seeder;
 
 class PlayerRecruitSeeder extends Seeder
@@ -13,6 +14,6 @@ class PlayerRecruitSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\PlayerRecruit::class, 30)->create();
+        factory(PlayerRecruit::class, 30)->create();
     }
 }

@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        App\User::updateOrCreate(
+        User::updateOrCreate(
             ['name' => "jhvisser"],
             [
                 'password' => Hash::make(config('custom.user_account_password')),

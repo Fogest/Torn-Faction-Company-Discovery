@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Company;
 use Illuminate\Database\Seeder;
 
 class CompanySeeder extends Seeder
@@ -13,6 +14,6 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Company::class, 100)->create();
+        factory(Company::class, 100)->create();
     }
 }

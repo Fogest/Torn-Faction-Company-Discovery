@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Time;
 use Illuminate\Database\Seeder;
 
 class TimeSeeder extends Seeder
@@ -13,6 +14,6 @@ class TimeSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Time::class, 250)->create();
+        factory(Time::class, 250)->create();
     }
 }
