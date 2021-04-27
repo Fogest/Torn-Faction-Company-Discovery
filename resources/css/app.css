@@ -107,3 +107,10 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     @apply mt-1;
 }
 
+#settings-button:hover {
+    fill: rgba(189, 189, 189, 0.25);
+}
+
+#delete-all-data > a {
+    @apply text-center text-purple-600 text-sm pr-1 pb-0.5 italic inline-block w-full;
+}

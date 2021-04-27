@@ -123,9 +123,26 @@
                 }
             });
 
+            $("#modal-settings").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "fade",
+                    duration: 500
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 500
+                }
+            });
+
+
             $("#modal-date").flatpickr({
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
+            });
+
+            $("#settings-button").click(function () {
+                $("#modal-settings").dialog("open");
             });
 
             $("#new-card-button").click(function() {
@@ -271,11 +288,13 @@
 {{--@include('widgets.login')--}}
 
 @section('content')
-    <div>
-        <h1 class="text-4xl text-center pb-1">Torn Time Tracker</h1>
+    <div id="header-title" class="pb-2">
+        <h1 class="text-4xl text-center">Torn Time Tracker
         <svg
+            role="button"
+            id="settings-button"
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
+            class="h-9 w-9 relative inline"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -291,6 +310,7 @@
                 stroke-width="2"
                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
+        </h1>
     </div>
 
     <main id="card-holder"
@@ -298,19 +318,9 @@
         {{--    Dynamically inserted cards into here    --}}
     </main>
 
-    <form class="text-center mb-1" action="#">
-        {{--        <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="api-key">Torn API key</label>--}}
-        <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
-
-        <button id="save-api-key" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-1 rounded" type="button">Save Key</button>
-    </form>
     <h3 class="text-center text-base text-purple-500">All times shown are converted from TCT to your local time automatically</h3>
     <h2 class="text-center text-lg">Local Time: <span class="font-medium" id="datetime"></span></h2>
     <h2 class="text-center text-lg">Torn Time: <span class="font-medium" id="datetime-tct"></span></h2>
-{{--    <h3 class="text-center text-purple-400 text-sm pr-1 pb-0.5 italic">--}}
-{{--            <a href="#" id="delete-all-api-data">Delete all API and time data</a>--}}
-{{--    </h3>--}}
-
 
     {{--  Modal for Creating New Countdown  --}}
     <div id="modal-new-countdown" class="modal" title="Create New Countdown">
@@ -370,6 +380,21 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+
+
+    {{--  Modal for Settings Page  --}}
+    <div id="modal-settings" class="modal" title="Settings">
+        <div role="dialog">
+            <form class="text-center mb-1" action="#">
+                <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
+                <button id="save-api-key" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-1 rounded" type="button">Save Key</button>
+            </form>
+
+            <span id="delete-all-data">
+                <a href="#" id="delete-all-api-data">Delete all API and time data</a>
+            </span>
         </div>
     </div>
     @php
