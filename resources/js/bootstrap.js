@@ -49,3 +49,8 @@ require('datatables.net-responsive-dt');
  * Loading in flatpickr
  */
 window.flatpickr = require('flatpickr');
+
+/**
+ * Loading in intro.js
+ */
+window.introJs = require('intro.js');

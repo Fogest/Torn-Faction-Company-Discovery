@@ -7,7 +7,8 @@
 
 @push('scripts')
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.min.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" charset="utf8">
         class TimeCard {
@@ -110,6 +111,17 @@
         $(document).ready( function () {
             // Generate and insert the HTML for the default time cards
             createDefaultCards();
+
+            /* Start Intro JS - Site Tour*/
+            // check localStorage to see if we've run this before.  If we have then do nothing
+            if (localStorage.getItem("first-run") !== 'true') {
+
+                // set a flag in localStorage so we know we've run this before.
+                localStorage.setItem("first-run", 'true');
+
+                introJs().start();
+            }
+            /* End Intro JS */
 
             $("#modal-new-countdown").dialog({
                 autoOpen: false,
@@ -264,7 +276,9 @@
             createNewCard('new-card', 'Create New Card');
             $("#new-card").html(
                 '<button id="new-card-button"' +
-                ' class="btn btn-blue-outline">' +
+                ' class="btn btn-blue-outline"' +
+                ' data-intro="And once you\'ve added an API key you can add custom events to track in TCT or local times"' +
+                ' data-step=4>' +
                 'New' +
                 '</button>')
         }
@@ -289,12 +303,18 @@
 
 @section('content')
     <div id="header-title" class="pb-2">
-        <h1 class="text-4xl text-center">Torn Time Tracker
+        <h1 class="text-4xl text-center"
+            data-title="Welcome!"
+            data-intro="Hello, welcome to Torn Time Tracker 👋"
+            data-step=1>
+            Torn Time Tracker
         <svg
             role="button"
             id="settings-button"
             xmlns="http://www.w3.org/2000/svg"
             class="h-9 w-9 relative inline"
+            data-intro="You can adjust your settings by clicking this cog wheel (like your API key)"
+            data-step=3
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -314,11 +334,14 @@
     </div>
 
     <main id="card-holder"
-          class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap relative">
+          class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap relative"
+          data-intro="All the times shown in the cards here are converted from Torn time (TCT) to your local time"
+          data-step=2>
         {{--    Dynamically inserted cards into here    --}}
     </main>
 
-    <h3 class="text-center text-base text-purple-500">All times shown are converted from TCT to your local time automatically</h3>
+    <span class="text-center inline-block w-full text-base text-purple-500">
+        All times shown are converted from TCT to your local time automatically</span>
     <h2 class="text-center text-lg">Local Time: <span class="font-medium" id="datetime"></span></h2>
     <h2 class="text-center text-lg">Torn Time: <span class="font-medium" id="datetime-tct"></span></h2>
 
