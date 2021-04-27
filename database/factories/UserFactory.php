@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var Factory $factory 
+ * @var Factory $factory
  */
 
 use App\User;
