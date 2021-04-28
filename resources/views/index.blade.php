@@ -39,7 +39,7 @@ A list of all of the companies run by Nuclear Faction family members. Companies 
     </script>
 @endpush
 @section('content')
-<h1 class="text-center text-4xl">Nuclear Company Directory</h1>
+<h1 class="">Nuclear Company Directory</h1>
 <p class="text-center text-opacity-60 italic">Data automatically updated within 6 hours of changes</p>
 <p class="text-center text-opacity-60">Made By <a class="text-yellow-500 text-opacity-77" href="https://www.torn.com/profiles.php?XID=2254826">Fogest [2254826]</a></p>
 <table id='directory-table' class='display stripe hover' style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
