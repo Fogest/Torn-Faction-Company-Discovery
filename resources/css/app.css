@@ -103,6 +103,19 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     @apply bg-purple-500 text-white border-transparent;
 }
 
+.btn-filled-large {
+    @apply shadow bg-purple-500 text-white font-bold py-2 px-4 mt-1 rounded;
+}
+
+.btn-filled-large:hover {
+    @apply bg-purple-400;
+}
+
+.btn-filled-large:focus {
+    @apply ring outline-none;
+}
+
+
 #new-card-button {
     @apply mt-1;
 }
@@ -135,4 +148,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     @apply bg-purple-50;
 }
 
+.settings-box {
+    @apply pt-2 pb-2;
+}
 

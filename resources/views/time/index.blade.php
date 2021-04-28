@@ -157,6 +157,11 @@
                 $("#modal-settings").dialog("open");
             });
 
+            $("#show-tutorial-again").click(function() {
+                localStorage.setItem("first-run", 'false');
+                window.location.reload(false);
+            });
+
             $("main").on("click", '.delete-event-icon', function() {
                 let eventId = $(this).data("event-id");
                 if (!eventId) {
@@ -471,15 +476,25 @@
 
     {{--  Modal for Settings Page  --}}
     <div id="modal-settings" class="modal" title="Settings">
-        <div role="dialog">
-            <form class="text-center mb-1" action="#">
-                <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
-                <button id="save-api-key" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-1 rounded" type="button">Save Key</button>
-            </form>
+        <div role="dialog" class="grid grid-cols-1 gap-y-4 divide-y-2 divide-purple-200">
+            <div class="settings-box">
+                <form class="text-center" action="#">
+                    <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
+                    <button id="save-api-key" class="btn-filled-large" type="button">Save Key</button>
+                </form>
+            </div>
 
-            <span id="delete-all-data">
-                <a href="#" id="delete-all-api-data">Delete all API and time data</a>
-            </span>
+            <div class="settings-box">
+                <form class="text-center" action="#">
+                    <button id="show-tutorial-again" class="btn-filled-large" type="button">Show Tutorial Again</button>
+                </form>
+            </div>
+
+            <div class="settings-box">
+                <span id="delete-all-data">
+                    <a href="#" id="delete-all-api-data">Delete all API and time data</a>
+                </span>
+            </div>
         </div>
     </div>
     @php
