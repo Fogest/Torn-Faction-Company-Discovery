@@ -200,13 +200,32 @@
             });
 
             $("#save-api-key").click(function () {
-               let apiKey = $("#api-key").val();
-               $.post("{{ url('/time/api_key') }}", {
+                let apiKey = $("#api-key").val();
+                $.post("{{ url('/time/api_key') }}", {
                    _token: "{{ csrf_token() }}",
                    api_key: apiKey
-               }).done(function (data) {
+                }).done(function (data) {
                    alert(data);
-               });
+                }).fail(function (data) {
+                    alert(data);
+                });
+                $.get("{{ url('/time/get_times') }}", {
+                    _token: "{{ csrf_token() }}",
+                    api_key: apiKey
+                }).done(function (data) {
+                    // No data found, we done here.
+                    if (!Object.keys(data).length) return;
+
+                    // Must be data in the JSON array, let's grab the items and display the custom events.
+                    userCards.length = 0;
+                    data.forEach(function (time) {
+                        let m = moment.unix(time.event_date_time).utc();
+                        userCards.push(new TimeCard(time.event_id, time.event_name, time.recurring,
+                            time.multiple_per_day, m.hour(), m.minute(), m.second(),
+                            time.day_of_week, m.year(), m.month() + 1, m.date()));
+                    });
+                    updateTimes();
+                });
             });
 
             $("#modal-submit").click(function() {
@@ -249,6 +268,8 @@
                     $("#modal-new-countdown").dialog("close");
                     dateField.val("");
                     cardTitleField.val("");
+                }).fail(function (data) {
+                    alert("Error: " + data);
                 });
             });
 

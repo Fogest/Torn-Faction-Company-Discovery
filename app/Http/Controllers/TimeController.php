@@ -94,6 +94,25 @@ class TimeController extends Controller
         //
     }
 
+    public function getTimes(Request $request)
+    {
+        $playerId = session('player.id', null);
+        if (is_null($playerId) && $request->has('api_key')) {
+            $playerApiKey = $request->api_key;
+            // Get player id from table when only have API key
+            $player = Player::where('api_key', $playerApiKey)->first();
+            if ($player) {
+                $playerId = $player->id;
+            } else {
+                // Couldn't find any player ID, thus API key is invalid, or is a new user
+                // and thus will not have any custom events anyway :)
+                return response()->json([]);
+            }
+        }
+        $times = Player::find($playerId)->times;
+        return response()->json($times);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

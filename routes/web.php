@@ -27,8 +27,14 @@ Route::get('/recruit/update', 'RecruitController@batch');
 /* /time/ */
 Route::get('/time', 'TimeController@index');
 
+//TODO: Move to API.php routes
+Route::get('/time/get_times', 'TimeController@getTimes');
+
 Route::post('/time', 'TimeController@store');
+
+//TODO: Move to API.php routes
 Route::post('/time/api_key', 'PlayerController@addApiKey');
 
+//TODO: Move to API.php routes
 Route::delete('/time', 'TimeController@destroy');
 Route::delete('/time/destroyAll', 'TimeController@destroyAll');
