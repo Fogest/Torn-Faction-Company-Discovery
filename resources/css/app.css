@@ -165,6 +165,18 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 }
 
 .settings-box {
-    @apply pt-2 pb-2;
+    @apply pt-2;
+}
+
+.ttt-author {
+    @apply text-center text-opacity-60 inline-block w-full !important;
+}
+
+.ttt-author > a {
+    @apply text-purple-500 text-opacity-80 !important;
+}
+
+.ttt-author > a:hover {
+    @apply text-purple-600 text-opacity-100 underline !important;
 }
 

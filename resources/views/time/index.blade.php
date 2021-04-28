@@ -516,14 +516,9 @@
                     <a href="#" id="delete-all-api-data">Delete all API and time data</a>
                 </span>
             </div>
+            <div class="settings-box">
+                <p class="ttt-author">Made By <a href="https://www.torn.com/profiles.php?XID=2254826">Fogest [2254826]</a></p>
+            </div>
         </div>
     </div>
-    @php
-        //$time_end = microtime(true);
-
-        //$execution_time = ($time_end - $time_start)/60;
-        //echo '<b>Total Execution Time:</b> '.number_format((float) $execution_time, 10) .' Minutes<br>';
-        //echo "<b>Players Checked: </b>" . $i . "<br>";
-        //echo "<b>Last Generated: </b>" . date("Y-m-d H:i") . " EST" . "<br>";
-    @endphp
 @endsection
