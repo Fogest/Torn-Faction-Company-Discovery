@@ -401,14 +401,14 @@
     </div>
 
     <main id="card-holder"
-          class="mx-auto w-2/3 md:min-w-50 box-border p-4 border-2 lg:flex lg:flex-wrap relative"
+          class="mx-auto w-2/3 md:min-w-50 box-border p-4 mt-1 mb-2 border-2 lg:flex lg:flex-wrap relative"
           data-intro="All the times shown in the cards here are converted from Torn time (TCT) to your local time"
           data-step=2>
         {{--    Dynamically inserted cards into here    --}}
     </main>
 
-    <span class="text-center inline-block w-full text-base text-purple-500">
-        All times shown are converted from TCT to your local time automatically</span>
+{{--    <span class="text-center inline-block w-full text-base text-purple-500">--}}
+{{--        All times shown are converted from TCT to your local time automatically</span>--}}
     <h2 class="text-center text-lg">Local Time: <span class="font-medium" id="datetime"></span></h2>
     <h2 class="text-center text-lg">Torn Time: <span class="font-medium" id="datetime-tct"></span></h2>
 
