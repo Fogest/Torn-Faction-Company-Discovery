@@ -352,8 +352,8 @@
             }
             let html = "<div class=\"card-box\"" + firstRunIntroSpew + ">\n" +
                 "<div class=\"inner-card-box\">\n" +
-                "    <h2 class=\"text-2xl text-center\">"+ title +"</h2>\n" +
-                "    <p id=\""+ id +"\" class=\"text-center\"></p>\n" +
+                "    <h2 class=\"card-title\">"+ title +"</h2>\n" +
+                "    <p id=\""+ id +"\" class=\"card-text\"></p>\n" +
                 customEventContent +
                 "</div></div>"
             let newCard = $("#new-card");
@@ -370,7 +370,7 @@
 
 @section('content')
     <div id="header-title" class="pb-2">
-        <h1 class="text-4xl text-center"
+        <h1 class="ttt-title"
             data-title="Welcome!"
             data-intro="Hello, welcome to Torn Time Tracker 👋"
             data-step=1>

@@ -1,6 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Cuprum&family=Lobster&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ttt-title {
+    font-family: 'Lobster', cursive;
+    @apply text-5xl text-center;
+}
+
+.card-title {
+    font-family: 'Cuprum', sans-serif;
+    @apply text-3xl text-center;
+}
+
+.card-text {
+    @apply text-center;
+}
 
 html, body {
     background-color: #fff;
