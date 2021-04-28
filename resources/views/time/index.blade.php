@@ -157,6 +157,35 @@
                 $("#modal-settings").dialog("open");
             });
 
+            $("main").on("click", '.delete-event-icon', function() {
+                let eventId = $(this).data("event-id");
+                if (!eventId) {
+                    alert('Oops, something went wrong. Contact dev');
+                    return;
+                }
+                $.ajax("{{ url('/time/') }}", {
+                    method: 'DELETE',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        event_id: eventId,
+                    },
+                    success: function (result) {
+                        console.log(userCards);
+                        // Filter out card with deleting ID (ie: delete the card from the array)
+                        for (let i = userCards.length - 1; i >= 0; --i) {
+                            if (userCards[i].id === eventId) {
+                                userCards.splice(i,1);
+                            }
+                        }
+                        deleteCard(eventId);
+                        console.log(userCards);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert(errorThrown + ': ' + textStatus);
+                    }
+                });
+            });
+
             $("#new-card-button").click(function() {
                 if ($("#api-key").val() === "") {
                     alert("Must have an API key saved at the top to create custom events");
@@ -212,7 +241,6 @@
                     day_of_week: newEvent.dayOfWeek,
                     event_date_time: newEvent.createNextTime.unix()
                 }).done(function (data) {
-                    alert(data);
                     $("#modal-new-countdown").dialog("close");
                     dateField.val("");
                     cardTitleField.val("");
@@ -227,13 +255,12 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function (result) {
-                       alert(result);
-                       userCards.forEach(function(card) {
-                           let element = $("#" + card.id);
-                           element.parents().eq(1).remove();
-                       });
-                       $("#api-key").val('');
-                       userCards = [];
+                        alert(result);
+                        userCards.forEach(function(card) {
+                            deleteCard(card.id);
+                        });
+                        $("#api-key").val('');
+                        userCards = [];
                     }
                 });
             });
@@ -266,14 +293,23 @@
             });
         }
 
+        function deleteCard(id) {
+            let element = $("#" + id);
+            element.parent().effect("highlight", {color: 'rgb(252, 165, 165)'} , 1000, function() {
+                element.parents().eq(1).fadeOut(300, function() {
+                    $(this).remove();
+                });
+            });
+        }
+
         function createDefaultCards() {
             cards.forEach(function (card) {
-                createNewCard(card.id, card.title);
+                createNewCard(card.id, card.title, false);
             });
             userCards.forEach(function (card) {
                 createNewCard(card.id, card.title);
             });
-            createNewCard('new-card', 'Create New Card');
+            createNewCard('new-card', 'Create New Card', false);
             $("#new-card").html(
                 '<button id="new-card-button"' +
                 ' class="btn btn-blue-outline"' +
@@ -283,11 +319,37 @@
                 '</button>')
         }
 
-        function createNewCard(id, title) {
-            let html = "<div class=\"lg:w-1/3 px-3 pb-6\">\n" +
-                "<div class=\"bg-white p-5 rounded-lg shadow\">\n" +
+        function createNewCard(id, title, custom = true) {
+            let firstRunIntroSpew = '';
+            if (typeof createNewCard.isFirstRun == 'undefined') {
+                createNewCard.isFirstRun = true;
+                firstRunIntroSpew = ' data-intro=' +
+                    '"Once you add some custom events you can hover over a &quot;card&quot; and click the ❌ icon that will appear (just tap the card instead of hovering on mobile 😊)"' +
+                    ' data-step=5 ';
+            }
+
+            let customEventContent = '';
+            if (custom) {
+                customEventContent = '<svg' +
+                    ' role=button' +
+                    ' data-event-id="'+ id +'"' +
+                    ' class="delete-event-icon"' +
+                    ' xmlns="http://www.w3.org/2000/svg"' +
+                    ' fill="none" viewBox="0 0 24 24"' +
+                    ' stroke="currentColor"' +
+                    '>\n' +
+                    '  <path' +
+                    ' stroke-linecap="round"' +
+                    ' stroke-linejoin="round"' +
+                    ' stroke-width="2"' +
+                    ' d="M6 18L18 6M6 6l12 12" />\n' +
+                    '</svg>';
+            }
+            let html = "<div class=\"card-box\"" + firstRunIntroSpew + ">\n" +
+                "<div class=\"inner-card-box\">\n" +
                 "    <h2 class=\"text-2xl text-center\">"+ title +"</h2>\n" +
                 "    <p id=\""+ id +"\" class=\"text-center\"></p>\n" +
+                customEventContent +
                 "</div></div>"
             let newCard = $("#new-card");
             if (newCard.length)

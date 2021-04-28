@@ -97,14 +97,41 @@ class TimeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
+     * @return string
      */
     public function destroy(Request $request)
     {
-        $time = Time::where('event_id', $request->event_id)->first();
+        $playerId = session('player.id', null);
+        if (is_null($playerId)) {
+            return 'Unable to locate player session, please re-save API key';
+        }
+
+        $player =  Player::find($playerId);
+        if (!$player) {
+            return 'Unable to locate player session, please re-save API key';
+        }
+
+        $eventId = $request->event_id;
+        if (is_null($eventId)) {
+            return 'No event ID was provided';
+        }
+
+        $time = $player->times()->where('event_id', $eventId)->first();
+        if (!$time) {
+            return 'Unable to locate a custom event with this ID';
+        }
+
         $time->delete();
         return 'Event Deleted';
     }
 
+    /**
+     * Destroy all of custom times for a specified user.
+     *
+     * @param Request $request
+     * @return string
+     */
     public function destroyAll(Request $request)
     {
         $times = [];
