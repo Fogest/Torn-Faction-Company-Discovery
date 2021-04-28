@@ -340,7 +340,7 @@
             $("#new-card").html(
                 '<button id="new-card-button"' +
                 ' class="btn btn-blue-outline"' +
-                ' data-intro="And once you\'ve added an API key you can add custom events to track in TCT or local times"' +
+                ' data-intro="And once you\'ve added an API key you can add your own custom events using either TCT or your local time"' +
                 ' data-step=4>' +
                 'New' +
                 '</button>')
