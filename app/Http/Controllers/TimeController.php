@@ -149,6 +149,6 @@ class TimeController extends Controller
         $player->api_key = null;
         $player->save();
         $request->session()->forget('player.api_key');
-        return 'API key and time data removed';
+        return 'API key and custom event data removed';
     }
 }
