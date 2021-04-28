@@ -137,6 +137,7 @@
 
             $("#modal-settings").dialog({
                 autoOpen: false,
+                height: '350',
                 show: {
                     effect: "fade",
                     duration: 500
@@ -497,26 +498,27 @@
 
     {{--  Modal for Settings Page  --}}
     <div id="modal-settings" class="modal" title="Settings">
-        <div role="dialog" class="grid grid-cols-1 gap-y-4 divide-y-2 divide-purple-200">
+        <div role="dialog" class="">
             <div class="settings-box">
                 <form class="text-center" action="#">
                     <input class="border py-2 px-3 text-grey-darkest" style="text-align: center;" type="text" name="api-key" id="api-key" placeholder="API Key">
-                    <button id="save-api-key" class="btn-filled-large" type="button">Save Key</button>
+                    <button id="save-api-key" class="btn-filled-large settings-button" type="button">Save API Key</button>
                 </form>
             </div>
+
+            <div class="settings-divider"></div>
 
             <div class="settings-box">
                 <form class="text-center" action="#">
-                    <button id="show-tutorial-again" class="btn-filled-large" type="button">Show Tutorial Again</button>
+                    <button id="show-tutorial-again" class="btn-filled-large settings-button" type="button">Show Tutorial Again</button>
+                </form>
+
+                <form class="text-center" id="delete-all-data">
+                    <button id="delete-all-api-data" class="btn-filled-large settings-button" type="button">Delete Personal Data</button>
                 </form>
             </div>
-
-            <div class="settings-box">
-                <span id="delete-all-data">
-                    <a href="#" id="delete-all-api-data">Delete all API and time data</a>
-                </span>
-            </div>
-            <div class="settings-box">
+            <div class="settings-divider">
+            <div class="settings-box"></div>
                 <p class="ttt-author">Made By <a href="https://www.torn.com/profiles.php?XID=2254826">Fogest [2254826]</a></p>
             </div>
         </div>

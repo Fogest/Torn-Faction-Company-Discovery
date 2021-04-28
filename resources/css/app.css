@@ -120,11 +120,11 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
 }
 
 .btn-filled-large {
-    @apply shadow bg-purple-500 text-white font-bold py-2 px-4 mt-1 rounded;
+    @apply shadow text-purple-700 border border-purple-500 font-bold py-2 px-4 mt-1 rounded;
 }
 
 .btn-filled-large:hover {
-    @apply bg-purple-400;
+    @apply bg-purple-500 text-white border-transparent;
 }
 
 .btn-filled-large:focus {
@@ -180,3 +180,15 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataT
     @apply text-purple-600 text-opacity-100 underline !important;
 }
 
+.settings-button {
+    @apply w-3/4 mb-1;
+}
+
+.settings-divider {
+    @apply block h-0.5 mt-2 bg-gradient-to-r from-transparent via-purple-100 to-transparent;
+}
+
+.ui-dialog-title {
+    font-family: 'Cuprum', sans-serif;
+    @apply text-2xl;
+}
