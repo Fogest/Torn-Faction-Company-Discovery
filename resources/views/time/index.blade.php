@@ -2,7 +2,7 @@
 
 @section('title', 'Torn Time Tracker')
 @section('description')
-    A hub for various important Torn Times displayed in your local time instead of TCT. Even supports adding custom times!
+    A hub for various important Torn Times displayed in your local time instead of TCT, including support for adding custom events!
 @endsection
 
 @push('scripts')
