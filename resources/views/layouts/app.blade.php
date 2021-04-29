@@ -33,6 +33,26 @@
     <script type="text/javascript" charset="utf8" src="{{ mix('/js/app.js') }}"></script>
     @stack('scripts')
 
+    <!-- Matomo -->
+    <script type="text/javascript">
+        let _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        _paq.push(['enableHeartBeatTimer']);
+        @if(Session::has('player.id'))
+            _paq.push(['setUserId', '{{ Session::get('player.id') }}']);
+        @endif
+
+        (function() {
+            var u="//stats.jhvisser.com/";
+            _paq.push(['setTrackerUrl', u+'js/']);
+            _paq.push(['setSiteId', '1']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.src=u+'js/'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
 </head>
 <body>
     @yield('content')
